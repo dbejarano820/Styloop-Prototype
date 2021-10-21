@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
@@ -37,6 +37,8 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
 `;
 
+
+
 export default ({
   logoLinkUrl = "#",
   illustrationImageSrc = illustration,
@@ -46,7 +48,25 @@ export default ({
   tosUrl = "#",
   privacyPolicyUrl = "#",
   signInUrl = "https://www.youtube.com/"
-}) => (
+}) => { 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  var manageEmailChange = (tag)=>{
+    const {value} = tag.target;
+    setEmail(value);
+  };
+
+  var managePasswordChange = (tag)=>{
+    const {value} = tag.target;
+    setPassword(value);
+  };
+
+  var registerUser = ()=> {
+    //llamada del service
+  }
+
+  return ( 
   <AnimationRevealPage>
     <Container>
       <Content>
@@ -58,9 +78,9 @@ export default ({
             <Heading>{headingText}</Heading>
             <FormContainer>
               <Form>
-                <Input type="email" placeholder="Email" />
-                <Input type="password" placeholder="Password" />
-                <SubmitButton type="submit" href={signInUrl}>
+                <Input type="email" placeholder="Email" onChange={manageEmailChange} value={email} required/>
+                <Input type="password" placeholder="Password" onChange={managePasswordChange} value={password} required/>
+                <SubmitButton type="button" onClick={registerUser}>
                   <SubmitButtonIcon className="icon" />
                   <span className="text">{submitButtonText}</span>
                 </SubmitButton>
@@ -77,7 +97,7 @@ export default ({
 
                 <p tw="mt-8 text-sm text-gray-600 text-center">
                   Already have an account?{" "}
-                  <a href={signInUrl} tw="border-b border-gray-500 border-dotted">
+                  <a href={"#"} tw="border-b border-gray-500 border-dotted">
                     Sign In
                   </a>
                 </p>
@@ -91,4 +111,4 @@ export default ({
       </Content>
     </Container>
   </AnimationRevealPage>
-);
+)};

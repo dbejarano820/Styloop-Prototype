@@ -97,6 +97,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
  import LoginPageVendor from "pages/Login-Vendor.js";
  import SignupPageVendor from "pages/Signup-Vendor.js";
  import LandingPage from "pages/LandingPage";
+ import ShopMain from "pages/MainShop";
 // import PricingPage from "pages/Pricing.js";
 // import AboutUsPage from "pages/AboutUs.js";
 // import ContactUsPage from "pages/ContactUs.js";
@@ -107,30 +108,19 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import ThankYouPage from "pages/ThankYouPage.js";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import MainShop from "pages/MainShop";
 
 export default function App() {
 
   return (
     <Router>
       <Switch>
-        <Route path="/thank-you">
-          <ThankYouPage />
-        </Route>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-        <Route path="/login-vendor">
-          <LoginPageVendor />
-        </Route>
-        <Route path="/sign-up">
-          <SignupPage />
-        </Route>
-        <Route path="/sign-up-vendor">
-          <SignupPageVendor />
-        </Route>
-        <Route path="/">
-          <LandingPage />
-        </Route>
+        <Route path="/login" component={LoginPage}/>
+        <Route path="/login-vendor" component={LoginPageVendor} />
+        <Route path="/sign-up" component={SignupPage} />
+        <Route path="/sign-up-vendor" component={SignupPageVendor} />
+        <Route path="/shop" component={MainShop} />
+        <Route path="/" component={LandingPage}/>
       </Switch>
     </Router>
   );

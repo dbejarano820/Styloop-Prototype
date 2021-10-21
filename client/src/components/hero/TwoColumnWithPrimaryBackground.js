@@ -45,7 +45,7 @@ export default ({
   );
   const navLinks = [
     <NavLinks key={1}>
-      <NavLink href="#">Shop</NavLink>
+      <NavLink href="http://localhost:3000/shop">Shop</NavLink>
       <NavLink href="http://localhost:3000/login-vendor">Sell Clothes</NavLink>
       <NavLink href="#">About Us</NavLink>
       <NavLink href="http://localhost:3000/login">Login</NavLink>

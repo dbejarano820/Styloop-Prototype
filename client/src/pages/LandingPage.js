@@ -30,7 +30,7 @@ export default () => {
         imageCss={imageCss}
         imageDecoratorBlob={true}
         primaryButtonText="Shop Now"
-        primaryButtonUrl="https://www.youtube.com/"
+        primaryButtonUrl="http://localhost:3000/shop"
         watchVideoButtonText="Meet The Chefs"
       />
       <MainFeature
@@ -53,6 +53,7 @@ export default () => {
         buttonRounded={false}
         textOnLeft={false}
         primaryButtonText="Shop Now"
+        primaryButtonUrl="http://localhost:3000/shop"
         imageSrc={
           "https://images.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/09/30/Pictures/_b5b4ffd0-0320-11eb-a0ae-05799bfe6215.jpg"
         }

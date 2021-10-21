@@ -1,6 +1,6 @@
 import * as express from "express";
-// import {bidrouter} from './bidrouter';
-// import {offerrouter} from './offerrouter'
+import {itemrouter} from './itemrouter';
+import {userrouter} from './userrouter'
 
 class Routes {
 
@@ -19,8 +19,8 @@ class Routes {
     }
 
     private routes(): void {
-        // this.express.use('/bid', bidrouter);
-        // this.express.use('/offer', offerrouter);
+        this.express.use('/item', itemrouter);
+        this.express.use('/user', userrouter);
     }
 }
 
