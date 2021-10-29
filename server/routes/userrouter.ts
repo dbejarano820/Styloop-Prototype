@@ -23,10 +23,11 @@ app.put("/update", (req, res, next) => {                   //parte de requerimie
         .catch((err) => {
             res.json(err)
             return "";
+            
         });
 });
 
-app.put("/addPaymentMethod", (req, res, next) => {                   //requerimiento de crear usuario
+app.put("/addPaymentMethod", (req, res, next) => {                   //agregar payment
     UserController.getInstance().addPaymentMethodUser(req.body)
         .then((data) => {
             res.json(data);
@@ -37,7 +38,7 @@ app.put("/addPaymentMethod", (req, res, next) => {                   //requerimi
         });
 });
 
-app.put("/buyitem", (req, res, next) => {                   //requerimiento de crear usuario
+app.put("/buyitem", (req, res, next) => {                   //requerimiento de comprar item
     UserController.getInstance().buyItem(req.body)
         .then((data) => {
             res.json(data);

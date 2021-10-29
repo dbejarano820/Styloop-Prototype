@@ -1,4 +1,3 @@
-import { AnyKeys } from 'mongoose';
 import { Item, ItemModel } from '../models/item';
 
 export class item_data {
@@ -11,7 +10,7 @@ export class item_data {
     }
 
     public list() {
-        return ItemModel.find({}, {"_id":0, "sizes":0,"colors":0,"material":0,"quantity":0,"shippingPrice":0,"__v":0});
+        return ItemModel.find({}, {"_id":0, "sizes":0,"colors":0,"material":0,"quantity":0,"shippingPrice":0,"__v":0, "reviews":0});
     }
 
     public info(data: any) {   // se espera el nombre del articulo y nombre de la tienda
