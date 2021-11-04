@@ -111,16 +111,16 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainShop from "pages/MainShop";
 
 export default function App() {
-
   return (
     <Router>
       <Switch>
-        <Route path="/login" component={LoginPage}/>
-        <Route path="/login-vendor" component={LoginPageVendor} />
-        <Route path="/sign-up" component={SignupPage} />
-        <Route path="/sign-up-vendor" component={SignupPageVendor} />
-        <Route path="/shop" component={MainShop} />
-        <Route path="/" component={LandingPage}/>
+        <Route exact path= "/" component={LandingPage}/>
+        <Route exact path="/login" component={LoginPage}/>
+        <Route exact path="/login-vendor" component={LoginPageVendor} />
+        <Route exact path="/sign-up" component={SignupPage} />
+        <Route exact path="/sign-up-vendor" component={SignupPageVendor} />
+        <Route exact path="/shop" component={MainShop} />  
+        <Route exact path= "*" component={LandingPage}/>
       </Switch>
     </Router>
   );

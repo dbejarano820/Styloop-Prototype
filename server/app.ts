@@ -3,6 +3,7 @@ import Routes from './routes/routes';
 import * as mongoose from 'mongoose';
 import * as database from "./db"
 import path = require("path");
+const cors = require('cors');
 const session = require("express-session")
 const MongoDBStore = require("connect-mongodb-session")(session)
 
@@ -28,8 +29,15 @@ class App {
             store: new MongoDBStore({uri: 'mongodb://localhost:27017/styloop', collection: 'sessions'}),
             resave: false,
             saveUninitialized: true,
-        }))
+        }));
+        this.app.use(
+            cors({
+              origin: [/^http:\/\/localhost/],
+              credentials: true,
+            })
+          );
     }
+
 
     private routes(): void {
         this.app.use('/api', Routes);
