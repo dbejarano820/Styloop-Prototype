@@ -21,7 +21,7 @@ export class UserController {
 
     public async createUser(info: any): Promise<any> {
         const response = await this.user_repo.create(info);
-        return Promise.resolve("Todo gucci")
+        return Promise.resolve(response)
     }
 
     public async updateUser(info: any): Promise<any> {
@@ -44,8 +44,9 @@ export class UserController {
         return this.user_repo.update(userInfo, userUpdate)
     }
 
-    public async verifyUser(info: any): Promise<any> {  //hace falta? parte del requerimiento de crear usuario?
-        
+    public async loginUser(info: any): Promise<any> {  //hace falta? parte del requerimiento de crear usuario?
+        const response = await this.user_repo.login(info);
+        return Promise.resolve(response)
     }
 
     public async addPaymentMethodUser(info: any): Promise<any> {
