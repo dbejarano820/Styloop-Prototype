@@ -7,6 +7,7 @@ import Features from "components/features/ThreeColSimple.js";
 import MainFeature from "components/features/TwoColWithButton.js";
 import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
 import TabGrid from "components/cards/TabCardGrid.js";
+import NavBar from "components/hero/NavBar";
 import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
 import DownloadApp from "components/cta/DownloadApp.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
@@ -19,7 +20,7 @@ export default () => {
     const imageCss = tw`rounded-4xl`;
     return (
       <AnimationRevealPage>
-        <Hero/>
+        <NavBar/>
         {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
         <TabGrid
           heading={

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
@@ -6,7 +6,10 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/clothes-model-1.jpeg";
 import logo from "images/STYLOOP-01.png";
+import { UsersContext } from "../contexts/Users";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
+import { Redirect, Link , useHistory} from 'react-router-dom';
+import { checkServerIdentity } from "tls";
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -37,58 +40,103 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
 `;
 
-export default ({
-  logoLinkUrl = "#",
-  illustrationImageSrc = illustration,
-  headingText = "Sign Up For Styloop As A Vendor",
-  submitButtonText = "Sign Up",
-  SubmitButtonIcon = SignUpIcon,
-  tosUrl = "#",
-  privacyPolicyUrl = "#",
-  signInUrl = "#"
-}) => (
-  <AnimationRevealPage>
-    <Container>
-      <Content>
-        <MainContainer>
-          <LogoLink href={logoLinkUrl}>
-            <LogoImage src={logo} />
-          </LogoLink>
-          <MainContent>
-            <Heading>{headingText}</Heading>
-            <FormContainer>
-              <Form>
-                <Input type="email" placeholder="Email" />
-                <Input type="password" placeholder="Password" />
-                <SubmitButton type="submit">
-                  <SubmitButtonIcon className="icon" />
-                  <span className="text">{submitButtonText}</span>
-                </SubmitButton>
-                <p tw="mt-6 text-xs text-gray-600 text-center">
-                  I agree to abide by Styloops's{" "}
-                  <a href={tosUrl} tw="border-b border-gray-500 border-dotted">
-                    Terms of Service
-                  </a>{" "}
-                  and its{" "}
-                  <a href={privacyPolicyUrl} tw="border-b border-gray-500 border-dotted">
-                    Privacy Policy
-                  </a>
-                </p>
 
-                <p tw="mt-8 text-sm text-gray-600 text-center">
-                  Already have an account?{" "}
-                  <a href={signInUrl} tw="border-b border-gray-500 border-dotted">
-                    Sign In
-                  </a>
-                </p>
-              </Form>
-            </FormContainer>
-          </MainContent>
-        </MainContainer>
-        <IllustrationContainer>
-          <IllustrationImage imageSrc={illustrationImageSrc} />
-        </IllustrationContainer>
-      </Content>
-    </Container>
-  </AnimationRevealPage>
-);
+class SignupVendor extends React.Component {
+  static contextType = UsersContext
+  logoLinkUrl = "#";
+  illustrationImageSrc = illustration;
+  headingText = "Register For Styloop As A Seller";
+  submitButtonText = "Sign Up";
+  SubmitButtonIcon = SignUpIcon;
+  tosUrl = "#";
+  privacyPolicyUrl = "#";
+  signInUrl = "https://www.youtube.com/";
+
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const {email, firstname, lastname, store, password, confirmpassword} = this.state
+
+    const { title, text } = await this.context.registerUserSeller(email, firstname, lastname, store, password, confirmpassword, "seller");
+
+    if (title === "Done") {
+      await this.context.logUserIn(email, password);
+    }
+    this.setState({
+      alert: {
+        showAlert: true,
+        title,
+        text,
+      },
+    });
+  };
+
+
+  handleInputChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  render() {
+    if (this.context.isLoggedIn) {
+      return <Redirect to="/seller/mystore" />;
+    }
+    return(
+    <AnimationRevealPage>
+        <Container>
+          <Content>
+            <MainContainer>
+              <LogoLink href={this.logoLinkUrl}>
+                <LogoImage src={logo} />
+              </LogoLink>
+              <MainContent>
+                <Heading>{this.headingText}</Heading>
+                <FormContainer>
+                  <Form>
+                    <p>Personal:</p>
+                    <Input type="email" placeholder="Email" onChange={this.handleInputChange} name="email"/>
+                    <Input type="text" placeholder="First Name" onChange={this.handleInputChange} name="firstname"/>
+                    <Input type="text" placeholder="Last Name" onChange={this.handleInputChange} name="lastname"/>
+                    <br/> <br/>
+                    <p>Store:</p>
+                    <Input type="text" placeholder="Store Name" onChange={this.handleInputChange} name="store"/>
+                    <br/><br/>
+                    <p>Security:</p>
+                    <Input type="password" placeholder="Password" onChange={this.handleInputChange} name="password"/>
+                    <Input type="password" placeholder="Confirm Password" onChange={this.handleInputChange} name="confirmpassword"/>
+                    <SubmitButton type="button" onClick={this.handleSubmit}>
+                      <this.SubmitButtonIcon className="icon" />
+                      <span className="text">{this.submitButtonText}</span>
+                    </SubmitButton>
+                    <p tw="mt-6 text-xs text-gray-600 text-center">
+                      I agree to abide by Styloop's{" "}
+                      <a href={this.tosUrl} tw="border-b border-gray-500 border-dotted">
+                        Terms of Service
+                      </a>{" "}
+                      and its{" "}
+                      <a href={this.privacyPolicyUrl} tw="border-b border-gray-500 border-dotted">
+                        Privacy Policy
+                      </a>
+                    </p>
+
+                    <p tw="mt-8 text-sm text-gray-600 text-center">
+                      Already have an account?{" "}
+                      <a href={"/login-seller"} tw="border-b border-gray-500 border-dotted">
+                        Sign In
+                      </a>
+                    </p>
+                  </Form>
+                </FormContainer>
+              </MainContent>
+            </MainContainer>
+            <IllustrationContainer>
+              <IllustrationImage imageSrc={this.illustrationImageSrc} />
+            </IllustrationContainer>
+          </Content>
+        </Container>
+      </AnimationRevealPage>
+        );
+  }
+}
+
+export default SignupVendor;

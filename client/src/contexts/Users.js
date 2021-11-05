@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {history} from '../global';
 
 const UsersContext = React.createContext();
 const API_URL = 'http://localhost:5000';
@@ -12,17 +13,16 @@ class UsersContextProvider extends Component {
       user: {},
       logUserIn: this.logUserIn,
       logUserOut: this.logUserOut,
-   //   registerUser: this.registerUser,
+      registerUserBuyer: this.registerUserBuyer,
+      registerUserSeller: this.registerUserSeller,
     };
   }
 
   componentDidMount = async () => {
-      console.log(API_URL)
     const res = await fetch(`${API_URL}/api/user/verify`, {
       credentials: 'include',
     });
     const data = await res.json();
-
     const isLoggedIn = data.user ? true : false;
     const user = data.user ? data.user : {};
     this.setState({ isLoggedIn, user });
@@ -30,19 +30,17 @@ class UsersContextProvider extends Component {
 
   logUserIn = async (email, password) => {
     let title, text;
-
     const res = await fetch(`${API_URL}/api/user/login`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
+      method: 'PUT',
+      body: JSON.stringify({email, password }),
     });
-
+    
     const { user, statusCode: responseStatus } = await res.json();
-
     if (responseStatus === 422) {
       title = 'Ooops!';
       text = 'Incorrect credentials.';
@@ -51,6 +49,7 @@ class UsersContextProvider extends Component {
         isLoggedIn: true,
         user,
       });
+      console.log(user)
 
       title = 'Done';
       text = 'You will get redirected to home page.';
@@ -58,53 +57,92 @@ class UsersContextProvider extends Component {
       title = 'Ooops!';
       text = 'Something went wrong. Try again later.';
     }
-    console.log(title)
+
     return { title, text };
   };
 
-//   registerUser = async (username, email, password, confirmPassword) => {
-//     let title, text;
+  registerUserBuyer = async (email, firstname, lastname, firstline, secondline, zipcode, city,
+    state, country, merchant, username, password, confirmpassword, usertype) => {
+    let title, text;
 
-//     if (password.length < 8 || confirmPassword.length < 8) {
-//       title = 'Ooops!';
-//       text = 'Password must be longer than 8 chars.';
-//     } else if (password !== confirmPassword) {
-//       title = 'Ooops!';
-//       text = 'Password and Confirm Password must match.';
-//     } else {
-//       const res = await fetch(`${API_URL}/api/users/register`, {
-//         headers: {
-//           Accept: 'application/json',
-//           'Content-Type': 'application/json',
-//         },
-//         credentials: 'include',
-//         method: 'POST',
-//         body: JSON.stringify({ username, email, password }),
-//       });
 
-//       const responseStatus = res.status;
+    if (password.length < 3 || confirmpassword.length < 3) {
+      title = 'Ooops!';
+      text = 'Password must be longer than 3 chars.';
+    } else if (password !== confirmpassword) {
+      title = 'Ooops!';
+      text = 'Password and Confirm Password must match.';
+    } else {
+      const res = await fetch(`${API_URL}/api/user/register`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify({ usertype, email, firstname, lastname, password, address: {firstline,secondline,zipcode,city,secondline,country}, paymentmethods : {merchant, user:username}}),
+      });
 
-//       if (responseStatus === 409) {
-//         title = 'Ooops!';
-//         text = 'Username already taken.';
-//       } else if (responseStatus === 201) {
-//         title = 'Done';
-//         text = 'Your account was created.';
-//       } else {
-//         title = 'Ooops!';
-//         text = 'Something went wrong. Try again later.';
-//       }
-//     }
+      const responseStatus = res.status;
 
-//     return { title, text };
-//   };
+      if (responseStatus === 409) {
+        title = 'Ooops!';
+        text = 'Username already taken.';
+      } else if (responseStatus === 201) {
+        title = 'Done';
+        text = 'Your account was created.';
+      } else {
+        title = 'Ooops!';
+        text = 'Something went wrong. Try again later.';
+      }
+    }
+
+    return { title, text };
+  };
+
+  registerUserSeller = async (email, firstname, lastname, store, password, confirmpassword, usertype) => {
+    let title, text;
+
+
+    if (password.length < 3 || confirmpassword.length < 3) {
+      title = 'Ooops!';
+      text = 'Password must be longer than 3 chars.';
+    } else if (password !== confirmpassword) {
+      title = 'Ooops!';
+      text = 'Password and Confirm Password must match.';
+    } else {
+      const res = await fetch(`${API_URL}/api/user/register`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify({ usertype, email, firstname, lastname, password, store}),
+      });
+
+      const responseStatus = res.status;
+
+      if (responseStatus === 409) {
+        title = 'Ooops!';
+        text = 'Username already taken.';
+      } else if (responseStatus === 201) {
+        title = 'Done';
+        text = 'Your account was created.';
+      } else {
+        title = 'Ooops!';
+        text = 'Something went wrong. Try again later.';
+      }
+    }
+
+    return { title, text };
+  };
 
   logUserOut = async () => {
-    await fetch(`${API_URL}/api/users/logout`, {
+    await fetch(`${API_URL}/api/user/logout`, {
       credentials: 'include',
-      method: 'POST',
+      method: 'PUT',
     });
-
     this.setState({ isLoggedIn: false, user: {} });
   };
 

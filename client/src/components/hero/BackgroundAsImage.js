@@ -56,33 +56,33 @@ const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
 `;
 
 export default () => {
-  const navLinks = [
-    <NavLinks key={1}>
-      <NavLink href="#">
-        About
-      </NavLink>
-      <NavLink href="#">
-        Blog
-      </NavLink>
-      <NavLink href="#">
-        Locations
-      </NavLink>
-      <NavLink href="#">
-        Pricing
-      </NavLink>
-    </NavLinks>,
-    <NavLinks key={2}>
-      <PrimaryLink href="/#">
-        Hire Us
-      </PrimaryLink>
-    </NavLinks>
-  ];
+  // const navLinks = [
+  //   <NavLinks key={1}>
+  //     <NavLink href="#">
+  //       About
+  //     </NavLink>
+  //     <NavLink href="#">
+  //       Blog
+  //     </NavLink>
+  //     <NavLink href="#">
+  //       Locations
+  //     </NavLink>
+  //     <NavLink href="#">
+  //       Pricing
+  //     </NavLink>
+  //   </NavLinks>,
+  //   <NavLinks key={2}>
+  //     <PrimaryLink href="/#">
+  //       Hire Us
+  //     </PrimaryLink>
+  //   </NavLinks>
+  // ];
 
   return (
     <Container>
       <OpacityOverlay />
       <HeroContainer>
-        <StyledHeader links={navLinks} />
+        {/* <StyledHeader links={navLinks} /> */}
         <TwoColumn>
           <LeftColumn>
             <Notification>We have now launched operations in Europe.</Notification>

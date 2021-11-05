@@ -23,13 +23,15 @@ app.put("/login", requireNotLoggedin, async (req, res, next) => {               
 
             const{
                 statusCode, 
-                user: {firstname, lastname, email},
+                user: {usertype, firstname, lastname, email, store},
             } = data
-            
-            const loggedInUser = {firstname, lastname, email}
+
+            const {firstline, secondline, zipcode, city, state, country} = data.user.address
+            const loggedInUser = {usertype, firstname, lastname, email, store, firstline, secondline, zipcode, city, state, country}
             if(statusCode == 204) {
                 req.session.user = loggedInUser
             }
+            console.log(loggedInUser)
             res.json({user: loggedInUser, statusCode});
         })
         .catch((err) => {
@@ -38,13 +40,13 @@ app.put("/login", requireNotLoggedin, async (req, res, next) => {               
         });
 });
 
-app.put("/logout", requireLoggedin, async (req, res, next) => {                   //requerimiento de crear usuario
+app.put("/logout", requireLoggedin, async (req, res, next) => {                  //requerimiento de crear usuario
     req.session.destroy(() => {
         res.status(200).end();
     })
 });
 
-app.get("/verify", (req, res, next) => {                   //requerimiento de crear usuario
+app.get("/verify", (req, res, next) => {                  //requerimiento de crear usuario
     req.session.user
         ? res.json({user: req.session.user })
         : res.json({loggedIn: false})
