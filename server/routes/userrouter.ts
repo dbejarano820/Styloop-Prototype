@@ -1,18 +1,55 @@
 import * as express from 'express';
 import { UserController } from '../controllers/usercontroller';
+const requireNotLoggedin = require('../helpers/requireNotLoggedin.js');
+const requireLoggedin = require('../helpers/requireLoggedin.js');
+
 
 const app = express.Router();
 
-
-app.put("/create", (req, res, next) => {                   //requerimiento de crear usuario
+app.put("/register", requireNotLoggedin, (req, res, next) => {                   //requerimiento de crear usuario
     UserController.getInstance().createUser(req.body)
         .then((data) => {
-            res.json(data);
+            res.status(data).end();
         })
         .catch((err) => {
             res.json(err)
             return "";
         });
+});
+
+app.put("/login", requireNotLoggedin, async (req, res, next) => {                   //requerimiento de crear usuario
+     UserController.getInstance().loginUser(req.body)
+        .then((data) => {
+
+            const{
+                statusCode, 
+                user: {usertype, firstname, lastname, email, store},
+            } = data
+
+            const {firstline, secondline, zipcode, city, state, country} = data.user.address
+            const loggedInUser = {usertype, firstname, lastname, email, store, firstline, secondline, zipcode, city, state, country}
+            if(statusCode == 204) {
+                req.session.user = loggedInUser
+            }
+            console.log(loggedInUser)
+            res.json({user: loggedInUser, statusCode});
+        })
+        .catch((err) => {
+            res.json(err)
+            return "";
+        });
+});
+
+app.put("/logout", requireLoggedin, async (req, res, next) => {                  //requerimiento de crear usuario
+    req.session.destroy(() => {
+        res.status(200).end();
+    })
+});
+
+app.get("/verify", (req, res, next) => {                  //requerimiento de crear usuario
+    req.session.user
+        ? res.json({user: req.session.user })
+        : res.json({loggedIn: false})
 });
 
 app.put("/update", (req, res, next) => {                   //parte de requerimiento de crear usuario
@@ -27,7 +64,7 @@ app.put("/update", (req, res, next) => {                   //parte de requerimie
         });
 });
 
-app.put("/addPaymentMethod", (req, res, next) => {                   //agregar payment
+app.put("/addPaymentMethod", requireLoggedin, (req, res, next) => {                   //agregar payment
     UserController.getInstance().addPaymentMethodUser(req.body)
         .then((data) => {
             res.json(data);
@@ -38,7 +75,7 @@ app.put("/addPaymentMethod", (req, res, next) => {                   //agregar p
         });
 });
 
-app.put("/buyitem", (req, res, next) => {                   //requerimiento de comprar item
+app.put("/buyitem", requireLoggedin, (req, res, next) => {                   //requerimiento de comprar item
     UserController.getInstance().buyItem(req.body)
         .then((data) => {
             res.json(data);

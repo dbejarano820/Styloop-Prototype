@@ -6,7 +6,10 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/clothes-model-1.jpeg";
 import logo from "images/STYLOOP-01.png";
+import { UsersContext } from "../contexts/Users";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
+import { Redirect, Link , useHistory} from 'react-router-dom';
+import { checkServerIdentity } from "tls";
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -38,77 +41,112 @@ const IllustrationImage = styled.div`
 `;
 
 
+class SignupClient extends React.Component {
+  static contextType = UsersContext
+  logoLinkUrl = "#";
+  illustrationImageSrc = illustration;
+  headingText = "Sign Up For Styloop";
+  submitButtonText = "Sign Up";
+  SubmitButtonIcon = SignUpIcon;
+  tosUrl = "#";
+  privacyPolicyUrl = "#";
+  signInUrl = "https://www.youtube.com/";
 
-export default ({
-  logoLinkUrl = "#",
-  illustrationImageSrc = illustration,
-  headingText = "Sign Up For Styloop",
-  submitButtonText = "Sign Up",
-  SubmitButtonIcon = SignUpIcon,
-  tosUrl = "#",
-  privacyPolicyUrl = "#",
-  signInUrl = "https://www.youtube.com/"
-}) => { 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const {email, firstname, lastname, firstline, secondline, zipcode, city,
+      state, country, merchant, username, password, confirmpassword} = this.state
 
-  var manageEmailChange = (tag)=>{
-    const {value} = tag.target;
-    setEmail(value);
+    const { title, text } = await this.context.registerUserBuyer(email, firstname, lastname, firstline, secondline, zipcode, city,
+      state, country, merchant, username, password, confirmpassword, "buyer");
+
+    if (title === "Done") {
+      await this.context.logUserIn(email, password);
+    }
+    this.setState({
+      alert: {
+        showAlert: true,
+        title,
+        text,
+      },
+    });
   };
 
-  var managePasswordChange = (tag)=>{
-    const {value} = tag.target;
-    setPassword(value);
+
+  handleInputChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   };
 
-  var registerUser = ()=> {
-    //llamada del service
+  render() {
+    if (this.context.isLoggedIn) {
+      return <Redirect to="/shop" />;
+    }
+    return(
+    <AnimationRevealPage>
+        <Container>
+          <Content>
+            <MainContainer>
+              <LogoLink href={this.logoLinkUrl}>
+                <LogoImage src={logo} />
+              </LogoLink>
+              <MainContent>
+                <Heading>{this.headingText}</Heading>
+                <FormContainer>
+                  <Form>
+                  <p>Personal:</p>
+                    <Input type="email" placeholder="Email" onChange={this.handleInputChange} name="email"/>
+                    <Input type="text" placeholder="First Name" onChange={this.handleInputChange} name="firstname"/>
+                    <Input type="text" placeholder="Last Name" onChange={this.handleInputChange} name="lastname"/>
+                    <br/> <br/>
+                    <p>Address:</p>
+                    <Input type="text" placeholder="Firstline" onChange={this.handleInputChange} name="firstline"/>
+                    <Input type="text" placeholder="Secondline" onChange={this.handleInputChange} name="secondline"/>
+                    <Input type="text" placeholder="Zipcode" onChange={this.handleInputChange} name="zipcode"/>
+                    <Input type="text" placeholder="City" onChange={this.handleInputChange} name="city"/>
+                    <Input type="text" placeholder="State" onChange={this.handleInputChange} name="state"/>
+                    <Input type="text" placeholder="Country" onChange={this.handleInputChange} name="country"/>
+                    <br/> <br/>
+                    <p>Payment:</p>
+                    <Input type="text" placeholder="Merchant" onChange={this.handleInputChange} name="merchant"/>
+                    <Input type="text" placeholder="Username" onChange={this.handleInputChange} name="username"/>
+                    <p>Security:</p>
+                    <Input type="password" placeholder="Password" onChange={this.handleInputChange} name="password"/>
+                    <Input type="password" placeholder="Confirm Password" onChange={this.handleInputChange} name="confirmpassword"/>
+                    <SubmitButton type="button" onClick={this.handleSubmit}>
+                      <this.SubmitButtonIcon className="icon" />
+                      <span className="text">{this.submitButtonText}</span>
+                    </SubmitButton>
+                    <p tw="mt-6 text-xs text-gray-600 text-center">
+                      I agree to abide by Styloop's{" "}
+                      <a href={this.tosUrl} tw="border-b border-gray-500 border-dotted">
+                        Terms of Service
+                      </a>{" "}
+                      and its{" "}
+                      <a href={this.privacyPolicyUrl} tw="border-b border-gray-500 border-dotted">
+                        Privacy Policy
+                      </a>
+                    </p>
+
+                    <p tw="mt-8 text-sm text-gray-600 text-center">
+                      Already have an account?{" "}
+                      <a href={"#"} tw="border-b border-gray-500 border-dotted">
+                        Sign In
+                      </a>
+                    </p>
+                  </Form>
+                </FormContainer>
+              </MainContent>
+            </MainContainer>
+            <IllustrationContainer>
+              <IllustrationImage imageSrc={this.illustrationImageSrc} />
+            </IllustrationContainer>
+          </Content>
+        </Container>
+      </AnimationRevealPage>
+        );
   }
+}
 
-  return ( 
-  <AnimationRevealPage>
-    <Container>
-      <Content>
-        <MainContainer>
-          <LogoLink href={logoLinkUrl}>
-            <LogoImage src={logo} />
-          </LogoLink>
-          <MainContent>
-            <Heading>{headingText}</Heading>
-            <FormContainer>
-              <Form>
-                <Input type="email" placeholder="Email" onChange={manageEmailChange} value={email} required/>
-                <Input type="password" placeholder="Password" onChange={managePasswordChange} value={password} required/>
-                <SubmitButton type="button" onClick={registerUser}>
-                  <SubmitButtonIcon className="icon" />
-                  <span className="text">{submitButtonText}</span>
-                </SubmitButton>
-                <p tw="mt-6 text-xs text-gray-600 text-center">
-                  I agree to abide by Styloop's{" "}
-                  <a href={tosUrl} tw="border-b border-gray-500 border-dotted">
-                    Terms of Service
-                  </a>{" "}
-                  and its{" "}
-                  <a href={privacyPolicyUrl} tw="border-b border-gray-500 border-dotted">
-                    Privacy Policy
-                  </a>
-                </p>
-
-                <p tw="mt-8 text-sm text-gray-600 text-center">
-                  Already have an account?{" "}
-                  <a href={"#"} tw="border-b border-gray-500 border-dotted">
-                    Sign In
-                  </a>
-                </p>
-              </Form>
-            </FormContainer>
-          </MainContent>
-        </MainContainer>
-        <IllustrationContainer>
-          <IllustrationImage imageSrc={illustrationImageSrc} />
-        </IllustrationContainer>
-      </Content>
-    </Container>
-  </AnimationRevealPage>
-)};
+export default SignupClient;

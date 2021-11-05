@@ -1,6 +1,6 @@
 import "tailwindcss/dist/base.css";
 import "styles/globalStyles.css";
-import React from "react";
+import React, {Component} from "react";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
 /*
@@ -97,7 +97,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
  import LoginPageVendor from "pages/Login-Vendor.js";
  import SignupPageVendor from "pages/Signup-Vendor.js";
  import LandingPage from "pages/LandingPage";
- import ShopMain from "pages/MainShop";
+ import ProfilePage from "pages/Profile";
 // import PricingPage from "pages/Pricing.js";
 // import AboutUsPage from "pages/AboutUs.js";
 // import ContactUsPage from "pages/ContactUs.js";
@@ -109,19 +109,42 @@ import ThankYouPage from "pages/ThankYouPage.js";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainShop from "pages/MainShop";
+import SellerStore from "pages/MyStore";
+import {useHistory } from "react-router-dom";
 
-export default function App() {
+// export default function App() {
+//   return (
+//     // <Router>
+//       <Switch>
+//         <Route exact path= "/" component={LandingPage}/>
+//         <Route exact path="/login" component={LoginPage}/>
+//         <Route exact path="/login-vendor" component={LoginPageVendor} />
+//         <Route exact path="/sign-up" component={SignupPage} />
+//         <Route exact path="/sign-up-vendor" component={SignupPageVendor} />
+//         <Route exact path="/shop" component={MainShop} />  
+//         <Route exact path= "*" component={LandingPage}/>
+//       </Switch>
+//     // </Router>
+//   );  
+// }
 
-  return (
-    <Router>
+
+class App extends Component {
+  render() {
+    return (
       <Switch>
-        <Route path="/login" component={LoginPage}/>
-        <Route path="/login-vendor" component={LoginPageVendor} />
-        <Route path="/sign-up" component={SignupPage} />
-        <Route path="/sign-up-vendor" component={SignupPageVendor} />
-        <Route path="/shop" component={MainShop} />
-        <Route path="/" component={LandingPage}/>
+        <Route exact path= "/" component={LandingPage}/>
+        <Route exact path="/login" component={LoginPage}/>
+        <Route exact path="/login-seller" component={LoginPageVendor} />
+        <Route exact path="/sign-up" component={SignupPage} />
+        <Route exact path="/sign-up-seller" component={SignupPageVendor} />
+        <Route exact path="/shop" component={MainShop} />  
+        <Route exact path="/profile" component={ProfilePage} /> 
+        <Route exact path="/seller/mystore" component={SellerStore} /> 
+        <Route exact path= "*" component={LandingPage}/>
       </Switch>
-    </Router>
-  );
+    );
+  }
 }
+
+export default App;

@@ -1,12 +1,11 @@
 import * as mongoose from 'mongoose'
 
 interface User {
-    type : string,
+    usertype: string,
     firstname : string,
     lastname : string,
     email : string,
     password : string,
-    usertype: string,
     store: string,
     address : {
         firstline : string,
@@ -35,12 +34,11 @@ interface User {
 
 
 const userSchema = new mongoose.Schema<User>({
-    type : String,
+    usertype: String,
     firstname : String,
     lastname : String,
     email : String,
     password : String,
-    usertype: String,
     store: String,
     address : {
         firstline : String,
