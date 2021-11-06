@@ -4,6 +4,7 @@ import { UsersContext } from "../contexts/Users";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import tw from "twin.macro";
 import styled from "styled-components";
+import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 
 import { Container as ContainerBase, ContentWithVerticalPadding, ContentWithPaddingLg } from "components/misc/Layouts.js";
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
@@ -28,6 +29,7 @@ const DividerTextContainer = tw.div`my-12 border-b text-center relative`;
 const DividerText = tw.div`leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform -translate-y-1/2 absolute inset-x-0 top-1/2 bg-transparent`;
 const Form = tw.form`mx-auto max-w-xs`;
 const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
+
 const SubmitButton = styled.button`
   ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-full py-4 rounded-lg hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
   .icon {
@@ -49,6 +51,7 @@ const IllustrationImage = styled.div`
 
 class AddProduct extends React.Component {
     static contextType = UsersContext;
+    SubmitButtonIcon = SignUpIcon;
     
     state = {
         itemsURL : "http://localhost:5000/api/item/info?store="+this.context.user.store,
@@ -75,6 +78,16 @@ class AddProduct extends React.Component {
             console.log("error trayendo los items")
         }
     }
+
+    handleInputChange(){
+        console.log('un campo se llenó')
+    }
+
+    handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log("se enviaron los datos")
+    };
+
    
     render () {
         const HighlightedText = tw.span`bg-teal-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
@@ -87,36 +100,39 @@ class AddProduct extends React.Component {
                 <Container>
                     <Description>Fill the requiered fields to upload a new item to your store.</Description>
                 </Container>
+                <ContentWithPaddingLg>
                 <FormContainer>
                   <Form>
-                    <p>Personal:</p>
-                    <Input type="email" placeholder="Email" onChange={this.handleInputChange} name="email"/>
-                    <Input type="text" placeholder="First Name" onChange={this.handleInputChange} name="firstname"/>
-                    <Input type="text" placeholder="Last Name" onChange={this.handleInputChange} name="lastname"/>
+                    <p>Item information:</p>
+                    <Input type="text" placeholder="Item Name" onChange={this.handleInputChange} name="itemname"/>
+                    <Input type="text" placeholder="Description" onChange={this.handleInputChange} name="itemdescription"/>
+                    <Input type="number" min="1" placeholder="Quantity" onChange={this.handleInputChange} name="itemquantity"/>
+                    <Input type="number" min="0" placeholder="Price" onChange={this.handleInputChange} name="itemprice"/>
                     <br/> <br/>
-                    <p>Store:</p>
-                    <Input type="text" placeholder="Store Name" onChange={this.handleInputChange} name="store"/>
+                    <p>Attach images:</p>
+                    <Input type="file" accept="image/*" onChange={this.handleInputChange} name="itemimage"/>
                     <br/><br/>
-                    <p>Security:</p>
-                    <Input type="password" placeholder="Password" onChange={this.handleInputChange} name="password"/>
-                    <Input type="password" placeholder="Confirm Password" onChange={this.handleInputChange} name="confirmpassword"/>
-                    {/*<SubmitButton type="button" onClick={this.handleSubmit}>
-                        <this.SubmitButtonIcon className="icon" />
-                        <span className="text">{this.submitButtonText}</span>
-                    </SubmitButton>*/}
+                    <p>Sizes:</p>
+                    <Row>
+                        <Input type="checkbox" placeholder="sizeS" onChange={this.handleInputChange} name="store"/>S
+                        <Input type="checkbox" placeholder="sizeM" onChange={this.handleInputChange} name="asd"/>M
+                        <Input type="checkbox" placeholder="sizeL" onChange={this.handleInputChange} name="fdg"/>L
+                    </Row>
+                    <br/><br/>
+                    <p>Colors:</p>
+                    <Row>
+                        <Input type="checkbox" placeholder="sizeS" onChange={this.handleInputChange} name="sto"/> RED
+                        <Input type="checkbox" placeholder="sizeM" onChange={this.handleInputChange} name="asd"/> WHITE
+                        <Input type="checkbox" placeholder="sizeL" onChange={this.handleInputChange} name="fdg"/> BLACK
+                    </Row>
+                    <br/><br/>
+                    <SubmitButton type="button" onClick={this.handleSubmit}>
+                        {/*<this.SubmitButtonIcon className="icon" />*/}
+                        <span className="text">Add to my store</span>
+                    </SubmitButton>
                   </Form>
                 </FormContainer>
-                {/*ARTICULOS DE LA TIENDA
-                <TabGrid
-                    heading={
-                    <>
-                        <HighlightedText>Catalogue</HighlightedText>
-                    </>
-                    }
-                    tabs={
-                        [this.state.items]
-                    }//-------------------------------------------------------------
-                />*/}
+                </ContentWithPaddingLg>
                 <Footer />
             </AnimationRevealPage>
         ) 
