@@ -110,6 +110,7 @@ import ThankYouPage from "pages/ThankYouPage.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainShop from "pages/MainShop";
 import SellerStore from "pages/MyStore";
+import ItemPage from "pages/Item";
 import {useHistory } from "react-router-dom";
 
 // export default function App() {
@@ -138,6 +139,7 @@ class App extends Component {
         <Route exact path="/login-seller" component={LoginPageVendor} />
         <Route exact path="/sign-up" component={SignupPage} />
         <Route exact path="/sign-up-seller" component={SignupPageVendor} />
+        <Route exact path="/shop/:store/:item" component={ItemPage} />
         <Route exact path="/shop" component={MainShop} />  
         <Route exact path="/profile" component={ProfilePage} /> 
         <Route exact path="/seller/mystore" component={SellerStore} /> 

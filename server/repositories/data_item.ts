@@ -18,6 +18,7 @@ export class item_data {
     }
 
     public info(data: any) {   // se espera el nombre del articulo y nombre de la tienda
+        console.log(data)
         return ItemModel.find(data);
     }
 
