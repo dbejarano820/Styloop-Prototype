@@ -110,6 +110,7 @@ import ThankYouPage from "pages/ThankYouPage.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainShop from "pages/MainShop";
 import SellerStore from "pages/MyStore";
+import AddProduct from "pages/AddProduct";
 import ItemPage from "pages/Item";
 import {useHistory } from "react-router-dom";
 
@@ -143,6 +144,7 @@ class App extends Component {
         <Route exact path="/shop" component={MainShop} />  
         <Route exact path="/profile" component={ProfilePage} /> 
         <Route exact path="/seller/mystore" component={SellerStore} /> 
+        <Route exact path="/seller/addproduct" component={AddProduct} /> 
         <Route exact path= "*" component={LandingPage}/>
       </Switch>
     );
