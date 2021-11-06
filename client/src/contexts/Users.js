@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState, setState} from 'react';
 import {history} from '../global';
 
 const UsersContext = React.createContext();
@@ -10,12 +10,14 @@ class UsersContextProvider extends Component {
 
     this.state = {
       isLoggedIn: false,
+      isLoading: true,
       user: {},
       logUserIn: this.logUserIn,
       logUserOut: this.logUserOut,
       registerUserBuyer: this.registerUserBuyer,
       registerUserSeller: this.registerUserSeller,
     };
+ 
   }
 
   componentDidMount = async () => {
@@ -25,7 +27,7 @@ class UsersContextProvider extends Component {
     const data = await res.json();
     const isLoggedIn = data.user ? true : false;
     const user = data.user ? data.user : {};
-    this.setState({ isLoggedIn, user });
+    this.setState({ isLoggedIn, user, isLoading: false });
   };
 
   logUserIn = async (email, password) => {
@@ -49,7 +51,6 @@ class UsersContextProvider extends Component {
         isLoggedIn: true,
         user,
       });
-      console.log(user)
 
       title = 'Done';
       text = 'You will get redirected to home page.';
