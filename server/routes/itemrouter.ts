@@ -27,6 +27,17 @@ app.get("/list", (req, res, next) => {                   //no es un requerimient
         });
 });
 
+app.get("/inventory", (req, res, next) => {                   //no es un requerimiento filtar prendas
+    ItemController.getInstance().listInventory(req.body.store)
+        .then((data) => {
+            res.json(data);
+        })
+        .catch((err) => {
+            res.json(err)
+            return "Error al retornar el inventario";
+        });
+});
+
 app.get("/info", (req, res, next) => {                   //ver informacion de una prenda
     ItemController.getInstance().infoItem(req.body)
         .then((data) => {

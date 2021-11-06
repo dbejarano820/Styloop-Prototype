@@ -61,7 +61,7 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 export default ({
   heading = "Checkout the Menu",
   tabs = {
-    All: [
+    Starters: [
         {
           imageSrc:
             "https://cdn.childrensalon.com/media/catalog/product/cache/0/image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/g/u/gucci-green-wool-logo-sweater-355716-fad697ba7c763abe3becba61a0adf6af77cdb03e.jpg",
@@ -143,9 +143,9 @@ export default ({
           url: "#"
         }
     ],
-    New: getRandomCards(),
-    Sales: getRandomCards(),
-    "Best Sellers": getRandomCards()
+    Main: getRandomCards(),
+    Soup: getRandomCards(),
+    Desserts: getRandomCards()
   }
 }) => {
   /*
