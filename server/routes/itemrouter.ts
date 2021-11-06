@@ -27,7 +27,7 @@ app.get("/list", (req, res, next) => {                   //no es un requerimient
         });
 });
 
-app.get("/info", (req, res, next) => {     
+app.get("/info", (req, res, next) => {    
     console.log(req.query)              //ver informacion de una prenda
     ItemController.getInstance().infoItem(req.query)
         .then((data) => {

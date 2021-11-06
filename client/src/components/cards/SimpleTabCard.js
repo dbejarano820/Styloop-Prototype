@@ -176,22 +176,3 @@ export default ({
     </Container>
   );
 };
-
-/* This function is only there for demo purposes. It populates placeholder cards */
-const getRandomCards = () => {
-  const cards = [
-    {
-      imageSrc:
-        "https://cdn.childrensalon.com/media/catalog/product/cache/0/image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/g/u/gucci-green-wool-logo-sweater-355716-fad697ba7c763abe3becba61a0adf6af77cdb03e.jpg",
-      title: "Gucci Sweater",
-      content: "Chicken Main Course",
-      price: "$5.99",
-      rating: "5.0",
-      reviews: "87",
-      url: "https://github.com/geraldzm/crypto_swap/blob/develop/front/web/src/pages/LoginPage/LoginPage.js"
-    }
-  ];
-
-  // Shuffle array
-  return cards.sort(() => Math.random() - 0.5);
-};

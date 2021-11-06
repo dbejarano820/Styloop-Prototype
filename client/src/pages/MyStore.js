@@ -17,21 +17,32 @@ const TextColumn = tw.div`text-center lg:text-left`;
 
 class MyStore extends React.Component {
     static contextType = UsersContext;
-    URL = "http://localhost:5000/api/item/info?store="+this.context.user.store;
-
-
+    
     state = {
-        tabs2 : {All : [], New : [], Sales : [], "Best sellers" : []}
+        itemsURL : "http://localhost:5000/api/item/info?store="+this.context.user.store,
+        items : []
     }
 
     async componentDidMount() {
-        const response = await fetch(URL);
-        const data = await response.json();
-        this.setState( { tabs2 : {All : data, New : data, Sales : data, "Best sellers" : data} } );
-        console.log(data);
+        console.log('fetch '+this.state.itemsURL)
+        try{
+            const res = await fetch(this.state.itemsURL, {
+                credentials: 'include',
+                method: 'GET'
+            });
+            const data = await res.json();
+            this.setState( 
+                data.map((article)=>{
+                    this.state.items.push({imageSrc:article.pictures[0], title:article.name, content:article.store, price:article.price, url:"/shop/"+article.store+"/"+article.name})
+                })
+            );
+            console.log('trajo los datos')
+            console.log(data);
+        }
+        catch{
+            console.log("error trayendo los items")
+        }
     }
-    
-    /*componentDidUpdate() { }*/
    
     render () {
         const HighlightedText = tw.span`bg-teal-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
@@ -64,12 +75,14 @@ class MyStore extends React.Component {
                         <HighlightedText>Catalogue</HighlightedText>
                     </>
                     }
-                    Tabs={this.state.tabs2} //-------------------------------------------------------------
+                    tabs={
+                        [this.state.items]
+                    }//-------------------------------------------------------------
                 />
                 <Footer />
             </AnimationRevealPage>
         ) 
-  }
+    }
         
 }
 
