@@ -28,12 +28,6 @@ export class ItemController {
         return this.item_repo.list();
     }
 
-    //---------------------------------------------------
-    public async listInventory(store: any): Promise<any> {
-        return this.item_repo.listInventory(store);
-    }
-    //---------------------------------------------------
-
     public async infoItem(info: any): Promise<any> {
         return this.item_repo.info(info);
     }

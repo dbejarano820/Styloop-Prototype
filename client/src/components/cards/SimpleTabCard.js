@@ -52,9 +52,10 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
   ${tw`pointer-events-none -z-20 absolute left-0 bottom-0 h-80 w-80 opacity-15 transform -translate-x-2/3 text-primary-500`}
 `;
 
+
 export default ({
-  heading = "Checkout the Menu",
-  tabs = {
+    heading = "This is your catalogue",
+    tabs = {
     All: [
         {
           imageSrc:
@@ -67,10 +68,43 @@ export default ({
           url: "#"
         }
     ],
-    New: getRandomCards(),
-    Sales: getRandomCards(),
-    "Best sellers": getRandomCards()
-  }
+    New: [
+        {
+          imageSrc:
+            "https://cdn.childrensalon.com/media/catalog/product/cache/0/image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/g/u/gucci-green-wool-logo-sweater-355716-fad697ba7c763abe3becba61a0adf6af77cdb03e.jpg",
+          title: "Gucci Sweater",
+          content: "Chicken Main Course",
+          price: "$5.99",
+          rating: "5.0",
+          reviews: "87",
+          url: "#"
+        }
+    ],
+    Sales: [
+        {
+          imageSrc:
+            "https://cdn.childrensalon.com/media/catalog/product/cache/0/image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/g/u/gucci-green-wool-logo-sweater-355716-fad697ba7c763abe3becba61a0adf6af77cdb03e.jpg",
+          title: "Gucci Sweater",
+          content: "Chicken Main Course",
+          price: "$5.99",
+          rating: "5.0",
+          reviews: "87",
+          url: "#"
+        }
+    ],
+    "Best sellers": [
+        {
+          imageSrc:
+            "https://cdn.childrensalon.com/media/catalog/product/cache/0/image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/g/u/gucci-green-wool-logo-sweater-355716-fad697ba7c763abe3becba61a0adf6af77cdb03e.jpg",
+          title: "Gucci Sweater",
+          content: "Chicken Main Course",
+          price: "$5.99",
+          rating: "5.0",
+          reviews: "87",
+          url: "#"
+        }
+    ]
+    }
 }) => {
   /*
    * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
@@ -161,123 +195,3 @@ const getRandomCards = () => {
   // Shuffle array
   return cards.sort(() => Math.random() - 0.5);
 };
-
-// export default ({
-//   heading = "Checkout the Menu",
-//   tabs = {
-//     All: [
-//         {
-//           imageSrc:
-//             "https://cdn.childrensalon.com/media/catalog/product/cache/0/image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/g/u/gucci-green-wool-logo-sweater-355716-fad697ba7c763abe3becba61a0adf6af77cdb03e.jpg",
-//           title: "Gucci Sweater",
-//           content: "Chicken Main Course",
-//           price: "$5.99",
-//           rating: "5.0",
-//           reviews: "87",
-//           url: "#"
-//         }
-//     ],
-//     New: getRandomCards(),
-//     Sales: getRandomCards(),
-//     "Best sellers": getRandomCards()
-//   }
-// }) => {
-//   /*
-//    * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
-//    * as the key and value of the key will be its content (as an array of objects).
-//    * To see what attributes are configurable of each object inside this array see the example above for "Starters".
-//    */
-  
-//   const tabsKeys = Object.keys(tabs);
-//   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-
-//   return (
-//     <Container>
-//       <ContentWithPaddingXl>
-//         <HeaderRow>
-//           <Header>{heading}</Header>
-//           <TabsControl>
-//             {Object.keys(tabs).map((tabName, index) => (
-//               <TabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
-//                 {tabName}
-//               </TabControl>
-//             ))}
-//           </TabsControl>
-//         </HeaderRow>
-
-//         {tabsKeys.map((tabKey, index) => (
-//           <TabContent
-//             key={index}
-//             variants={{
-//               current: {
-//                 opacity: 1,
-//                 scale:1,
-//                 display: "flex",
-//               },
-//               hidden: {
-//                 opacity: 0,
-//                 scale:0.8,
-//                 display: "none",
-//               }
-//             }}
-//             transition={{ duration: 0.4 }}
-//             initial={activeTab === tabKey ? "current" : "hidden"}
-//             animate={activeTab === tabKey ? "current" : "hidden"}
-//           >
-//             {tabs[tabKey].map((card, index) => (
-//               <CardContainer key={index}>
-//                 <Card className="group" href={card.url} initial="rest" whileHover="hover" animate="rest">
-//                   <CardImageContainer imageSrc={card.imageSrc}>
-//                     <CardRatingContainer>
-//                       <CardRating>
-//                         <StarIcon />
-//                         {card.rating}
-//                       </CardRating>
-//                       <CardReview>({card.reviews})</CardReview>
-//                     </CardRatingContainer>
-//                   </CardImageContainer>
-//                   <CardText>
-//                     <CardTitle>{card.title}</CardTitle>
-//                     <CardContent>{card.content}</CardContent>
-//                     <CardPrice>{card.price}</CardPrice>
-//                   </CardText>
-//                 </Card>
-//               </CardContainer>
-//             ))}
-//           </TabContent>
-//         ))}
-//       </ContentWithPaddingXl>
-//       <DecoratorBlob1 />
-//       <DecoratorBlob2 />
-//     </Container>
-//   );
-// };
-
-// /* This function is only there for demo purposes. It populates placeholder cards */
-// const getRandomCards = () => {
-//   const cards = [
-//     {
-//       imageSrc:
-//         "https://cdn.childrensalon.com/media/catalog/product/cache/0/image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/g/u/gucci-green-wool-logo-sweater-355716-fad697ba7c763abe3becba61a0adf6af77cdb03e.jpg",
-//       title: "Gucci Sweater",
-//       content: "Chicken Main Course",
-//       price: "$5.99",
-//       rating: "5.0",
-//       reviews: "87",
-//       url: "https://github.com/geraldzm/crypto_swap/blob/develop/front/web/src/pages/LoginPage/LoginPage.js"
-//     },
-//     {
-//       imageSrc:
-//         "https://img.mytheresa.com/560/560/33/jpeg/catalog/product/6a/P00294543.jpg",
-//       title: "Gucci Shirt",
-//       content: "Fried Mexican Beef",
-//       price: "$3.99",
-//       rating: "4.5",
-//       reviews: "34",
-//       url: "#"
-//     }
-//   ];
-
-//   // Shuffle array
-//   return cards.sort(() => Math.random() - 0.5);
-// };

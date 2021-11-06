@@ -13,10 +13,6 @@ export class item_data {
         return ItemModel.find({}, {"_id":0, "sizes":0,"colors":0,"material":0,"quantity":0,"shippingPrice":0,"__v":0, "reviews":0});
     }
 
-    public listInventory(data:any) {
-        return ItemModel.find({"store": data});
-    }
-
     public info(data: any) {   // se espera el nombre del articulo y nombre de la tienda
         console.log(data)
         return ItemModel.find(data);
