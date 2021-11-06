@@ -163,7 +163,7 @@ export default ({
                   <CardText>
                     <CardTitle>{card.title}</CardTitle>
                     <CardContent>{card.content}</CardContent>
-                    <CardPrice>{card.price}</CardPrice>
+                    <CardPrice>${card.price}</CardPrice>
                   </CardText>
                 </Card>
               </CardContainer>

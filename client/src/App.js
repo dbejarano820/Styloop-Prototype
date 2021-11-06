@@ -114,23 +114,6 @@ import AddProduct from "pages/AddProduct";
 import ItemPage from "pages/Item";
 import {useHistory } from "react-router-dom";
 
-// export default function App() {
-//   return (
-//     // <Router>
-//       <Switch>
-//         <Route exact path= "/" component={LandingPage}/>
-//         <Route exact path="/login" component={LoginPage}/>
-//         <Route exact path="/login-vendor" component={LoginPageVendor} />
-//         <Route exact path="/sign-up" component={SignupPage} />
-//         <Route exact path="/sign-up-vendor" component={SignupPageVendor} />
-//         <Route exact path="/shop" component={MainShop} />  
-//         <Route exact path= "*" component={LandingPage}/>
-//       </Switch>
-//     // </Router>
-//   );  
-// }
-
-
 class App extends Component {
   render() {
     return (
