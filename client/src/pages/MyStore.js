@@ -39,7 +39,9 @@ class MyStore extends React.Component {
             const data = await res.json();
             let itemsinfo = [];
             const asd = data.map((article)=>{
-                itemsinfo.push({imageSrc:article.pictures[0], title:article.name, content:article.store, price:article.price, url:"/shop/"+article.store+"/"+article.name})
+                itemsinfo.push({
+                    imageSrc:article.pictures[0], title:article.name, content:article.store, 
+                    price:article.price, url:"/shop/"+article.store+"/"+article.name+"/info"})
             });
             this.setState({items : itemsinfo, isFetching : false});
 

@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { Container, ContentWithPaddingXl } from "components/misc/Layouts.js";
 import { SectionHeading } from "components/misc/Headings.js";
-import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
@@ -39,7 +38,6 @@ const CardRating = styled.div`
 `;
 
 const CardReview = tw.div`font-medium text-xs text-gray-600`;
-
 const CardText = tw.div`p-4 text-gray-900`;
 const CardTitle = tw.h5`text-lg font-semibold group-hover:text-primary-500`;
 const CardContent = tw.p`mt-1 text-sm font-medium text-gray-600`;
@@ -106,73 +104,68 @@ export default ({
     ]
     }
 }) => {
-  /*
-   * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
-   * as the key and value of the key will be its content (as an array of objects).
-   * To see what attributes are configurable of each object inside this array see the example above for "Starters".
-   */
   
-  const tabsKeys = Object.keys(tabs);
-  const [activeTab, setActiveTab] = useState(tabsKeys[0]);
+    const tabsKeys = Object.keys(tabs);
+    const [activeTab, setActiveTab] = useState(tabsKeys[0]);
 
-  return (
-    <Container>
-      <ContentWithPaddingXl>
-        <HeaderRow>
-          <Header>{heading}</Header>
-          <TabsControl>
-            {Object.keys(tabs).map((tabName, index) => (
-              <TabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
-                {tabName}
-              </TabControl>
-            ))}
-          </TabsControl>
-        </HeaderRow>
+    return (
+        <Container>
+        <ContentWithPaddingXl>
+            <HeaderRow>
+            <Header>{heading}</Header>
+            <TabsControl>
+                {Object.keys(tabs).map((tabName, index) => (
+                <TabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
+                    {tabName}
+                </TabControl>
+                ))}
+            </TabsControl>
+            </HeaderRow>
 
-        {tabsKeys.map((tabKey, index) => (
-          <TabContent
-            key={index}
-            variants={{
-              current: {
-                opacity: 1,
-                scale:1,
-                display: "flex",
-              },
-              hidden: {
-                opacity: 0,
-                scale:0.8,
-                display: "none",
-              }
-            }}
-            transition={{ duration: 0.4 }}
-            initial={activeTab === tabKey ? "current" : "hidden"}
-            animate={activeTab === tabKey ? "current" : "hidden"}
-          >
-            {tabs[tabKey].map((card, index) => (
-              <CardContainer key={index}>
-                <Card className="group" href={card.url} initial="rest" whileHover="hover" animate="rest">
-                  <CardImageContainer imageSrc={card.imageSrc}>
-                    <CardRatingContainer>
-                      <CardRating>
-                        <StarIcon />
-                        {card.rating}
-                      </CardRating>
-                      <CardReview>({card.reviews})</CardReview>
-                    </CardRatingContainer>
-                  </CardImageContainer>
-                  <CardText>
-                    <CardTitle>{card.title}</CardTitle>
-                    <CardContent>{card.content}</CardContent>
-                    <CardPrice>${card.price}</CardPrice>
-                  </CardText>
-                </Card>
-              </CardContainer>
+            {tabsKeys.map((tabKey, index) => (
+                <TabContent
+                    key={index}
+                    variants={{
+                    current: {
+                        opacity: 1,
+                        scale:1,
+                        display: "flex",
+                    },
+                    hidden: {
+                        opacity: 0,
+                        scale:0.8,
+                        display: "none",
+                    }
+                    }}
+                    transition={{ duration: 0.4 }}
+                    initial={activeTab === tabKey ? "current" : "hidden"}
+                    animate={activeTab === tabKey ? "current" : "hidden"}
+                >
+                {tabs[tabKey].map((card, index) => (
+                <CardContainer key={index}>
+                    <Card className="group" href={card.url} initial="rest" whileHover="hover" animate="rest">
+                    <CardImageContainer imageSrc={card.imageSrc}>
+                        <CardRatingContainer>
+                        <CardRating>
+                            <StarIcon />
+                            {card.rating}
+                        </CardRating>
+                        <CardReview>({card.reviews})</CardReview>
+                        </CardRatingContainer>
+                    </CardImageContainer>
+                    <CardText>
+                        <CardTitle>{card.title}</CardTitle>
+                        <CardContent>{card.content}</CardContent>
+                        <CardPrice>${card.price}</CardPrice>
+                    </CardText>
+                    </Card>
+                </CardContainer>
+                ))}
+            </TabContent>
             ))}
-          </TabContent>
-        ))}
-      </ContentWithPaddingXl>
-      <DecoratorBlob1 />
-      <DecoratorBlob2 />
-    </Container>
-  );
+        </ContentWithPaddingXl>
+        <DecoratorBlob1 />
+        <DecoratorBlob2 />
+        </Container>
+    );
 };
