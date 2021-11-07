@@ -5,6 +5,7 @@ const app = express.Router();
 
 
 app.put("/create", (req, res, next) => {                   //requerimiento de cargar prenda
+    console.log(req.body)
     ItemController.getInstance().createItem(req.body)
         .then((data) => {
             res.json(data);

@@ -25,9 +25,9 @@ class MyStore extends React.Component {
     }
 
     async componentDidMount() {
-        console.log('fetch '+this.state.itemsURL)
+        //console.log('fetch '+this.state.itemsURL)
         const {store} = this.props.match.params
-        console.log(store)
+        //console.log(store)
         try{
             if(this.context.isLoading){
                 console.log("cargando")
@@ -55,7 +55,7 @@ class MyStore extends React.Component {
         const HighlightedText = tw.span`bg-teal-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
         const Description = tw.span`inline-block mt-2 text-center`;
         const imageCss = tw`rounded-4xl`;
-        console.log("render");
+        //console.log("render");
         return(
             <AnimationRevealPage>
                 <NavBar/>

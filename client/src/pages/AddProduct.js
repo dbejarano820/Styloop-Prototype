@@ -57,14 +57,14 @@ class AddProduct extends React.Component {
         this.setState({
           [event.target.name]: event.target.value,
         });
-        console.log(event.target.value)
+        //console.log(event.target.value)
     };
 
     handleInputImages = (event) => {
         this.setState({
             [event.target.name] : [event.target.value]    
         });
-        console.log(event.target.value)
+        //console.log(event.target.value)
     };
 
     handleInputList = (event) => {
@@ -72,7 +72,7 @@ class AddProduct extends React.Component {
         this.setState({
             [event.target.name] : arrayData
         });
-        console.log(arrayData)
+        //console.log(arrayData)
     };
 
     handleSubmit = async (event) => {
@@ -80,27 +80,29 @@ class AddProduct extends React.Component {
         const {store} = this.props.match.params
         this.state.istore = store;
 
-        const iteminfo = 
-        {
-            name: this.state.iname,
-            store: store,
-            description: this.state.idescription,
-            sizes: this.state.isizes,
-            colors: this.state.icolors,
-            material: this.state.imaterial,
-            quantity: this.state.iquantity,
-            price: this.state.iprice,
-            pictures: this.state.iimages,
-            reviewQuantity: 0,
-            shippingPrice: this.state.ishipping
+        const requestOptions = {
+            credentials: 'include',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: this.state.iname,
+                store: store,
+                description: this.state.idescription,
+                sizes: this.state.isizes,
+                colors: this.state.icolors,
+                material: this.state.imaterial,
+                quantity: this.state.iquantity,
+                price: this.state.iprice,
+                pictures: this.state.iimages,
+                reviewQuantity: 0,
+                shippingPrice: this.state.ishipping
+            })
         };
         try{
-            const res = await fetch(this.state.addproductURL, {
-                credentials: 'include',
-                method: 'PUT',
-                body: JSON.stringify(iteminfo)
-            });
-            console.log(iteminfo);
+            const res = await fetch(this.state.addproductURL, requestOptions);
+            console.log(requestOptions);
             this.setState({itemsaved : true});
         }
         catch{
@@ -111,10 +113,10 @@ class AddProduct extends React.Component {
    
     render () {
         const Description = tw.span`inline-block mt-0 text-center p-12`;
-        const imageCss = tw`rounded-4xl`;
+
         if(this.state.itemsaved){
             this.state.itemsaved = false;
-            return <Redirect to={"/seller/addproduct/"+this.state.istore}/>;
+            return <Redirect to={"/seller/mystore/"+this.state.istore}/>;
         }
         return(
             <AnimationRevealPage>
@@ -138,19 +140,9 @@ class AddProduct extends React.Component {
                     <Input type="text" placeholder="Image URL" onChange={this.handleInputImages} name="iimages"/>
                     <br/><br/>
                     <p>Sizes (please write sizes separated by comma):</p>
-                    {/*<Row>
-                        <Input type="checkbox" placeholder="sizeS" onChange={this.handleInputChange} name="store"/>S
-                        <Input type="checkbox" placeholder="sizeM" onChange={this.handleInputChange} name="asd"/>M
-                        <Input type="checkbox" placeholder="sizeL" onChange={this.handleInputChange} name="fdg"/>L
-                    </Row>*/}
                     <Input type="text" placeholder="Example: S,M,L" onChange={this.handleInputList} name="isizes"/>
                     <br/><br/>
                     <p>Colors (please write colors separated by comma):</p>
-                    {/*<Row>
-                        <Input type="checkbox" placeholder="sizeS" onChange={this.handleInputChange} name="sto"/> RED
-                        <Input type="checkbox" placeholder="sizeM" onChange={this.handleInputChange} name="asd"/> WHITE
-                        <Input type="checkbox" placeholder="sizeL" onChange={this.handleInputChange} name="fdg"/> BLACK
-                    </Row>*/}
                     <Input type="text" placeholder="Example: BLUE,BLACK,WHITE" onChange={this.handleInputList} name="icolors"/>
                     <br/><br/>
                     <SubmitButton type="button" onClick={this.handleSubmit}>
