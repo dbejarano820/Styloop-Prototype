@@ -9,12 +9,8 @@ import { Redirect, Link , useHistory} from 'react-router-dom';
 
 import { Container as ContainerBase, ContentWithVerticalPadding, ContentWithPaddingLg } from "components/misc/Layouts.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
-import ContactUs from "./ContactUs";
 
 const Container = tw(ContainerBase)`h-32 bg-teal-900 text-white font-medium flex justify-center -m-8`;
-const Row = tw.div`flex items-center flex-col lg:flex-row`;
-
-//-------------------------------------------------------------------
 const FormContainer = tw.div`w-full flex-1 mt-8`;
 const Form = tw.form`mx-auto max-w-xs`;
 const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
@@ -28,10 +24,6 @@ const SubmitButton = styled.button`
     ${tw`ml-3`}
   }
 `;
-
-//-------------------------------------------------------------------
-
-
 
 
 class AddProduct extends React.Component {
