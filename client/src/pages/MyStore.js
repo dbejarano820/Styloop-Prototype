@@ -19,23 +19,30 @@ class MyStore extends React.Component {
     static contextType = UsersContext;
     
     state = {
-        itemsURL : "http://localhost:5000/api/item/info?store="+this.context.user.store,
-        items : []
+        itemsURL : "http://localhost:5000/api/item/info?store="+this.props.match.params,
+        items : [],
+        isFetching : true
     }
 
     async componentDidMount() {
         console.log('fetch '+this.state.itemsURL)
+        const {store} = this.props.match.params
+        console.log(store)
         try{
-            const res = await fetch(this.state.itemsURL, {
+            if(this.context.isLoading){
+                console.log("cargando")
+            }
+            const res = await fetch("http://localhost:5000/api/item/info?store="+store, {
                 credentials: 'include',
                 method: 'GET'
             });
             const data = await res.json();
-            this.setState( 
-                data.map((article)=>{
-                    this.state.items.push({imageSrc:article.pictures[0], title:article.name, content:article.store, price:article.price, url:"/shop/"+article.store+"/"+article.name})
-                })
-            );
+            let itemsinfo = [];
+            const asd = data.map((article)=>{
+                itemsinfo.push({imageSrc:article.pictures[0], title:article.name, content:article.store, price:article.price, url:"/shop/"+article.store+"/"+article.name})
+            });
+            this.setState({items : itemsinfo, isFetching : false});
+
             console.log('trajo los datos')
             console.log(data);
         }
@@ -69,6 +76,7 @@ class MyStore extends React.Component {
                 </Container>
 
                 {/*ARTICULOS DE LA TIENDA*/}
+                  
                 <TabGrid
                     heading={
                     <>

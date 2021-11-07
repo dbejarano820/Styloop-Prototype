@@ -126,8 +126,8 @@ class App extends Component {
         <Route exact path="/shop/:store/:item" component={ItemPage} />
         <Route exact path="/shop" component={MainShop} />  
         <Route exact path="/profile" component={ProfilePage} /> 
-        <Route exact path="/seller/mystore" component={SellerStore} /> 
-        <Route exact path="/seller/addproduct" component={AddProduct} /> 
+        <Route exact path="/seller/mystore/:store" component={SellerStore} /> 
+        <Route exact path="/seller/addproduct/:store" component={AddProduct} /> 
         <Route exact path= "*" component={LandingPage}/>
       </Switch>
     );

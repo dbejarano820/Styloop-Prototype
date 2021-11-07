@@ -47,8 +47,8 @@ class NavBar extends Component {
         if(this.context.user.usertype == "seller"){
             navLinks = [
                 <NavLinks key={1}>
-                <NavLink href="/seller/mystore">My Store</NavLink>
-                    <NavLink href="/seller/addproduct">Add Product</NavLink>
+                <NavLink href={"/seller/mystore/"+this.context.user.store}>My Store</NavLink>
+                    <NavLink href={"/seller/addproduct/"+this.context.user.store}>Add Product</NavLink>
                     <NavLink href="#">Dashboard</NavLink>
                     <NavLink href="/profile" >Profile</NavLink>
                     <PrimaryLink onClick={this.context.logUserOut}>Logout</PrimaryLink>
