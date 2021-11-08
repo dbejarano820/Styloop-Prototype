@@ -30,12 +30,17 @@ export default ({
     userinfo = {},
     iteminfo = {}
 }) => {
+
+    const [purchasedone, setPurchasedone] = useState(false);
+
     
     const Description = tw.span`inline-block mt-0 text-left p-12`;
+    const Description2 = tw.span`inline-block mt-0 text-center p-12`;
     
-    const handleSubmit = () =>{
-        console.log("poop")
-        //return (<Redirect to="/profile"/>);
+    const handleSubmit = () => {
+        console.log("poop");
+        setPurchasedone(true);
+        //return <Redirect to="/profile"/>;
     }
 
     return(
@@ -43,10 +48,11 @@ export default ({
         <AnimationRevealPage>
             <NavBar/>
             <Container>
-                <Description>Please confirm the information below and proceed with the purchase.</Description>
+                <Description>{purchasedone ? "Thanks for buying our products!" : "Please confirm the information below and proceed with the purchase"}</Description>
             </Container>
             <ContentWithPaddingLg>
             
+            {!purchasedone ? (            
             <Form>
                 <div style={{ width: 350, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridGap: 15 }}>
                     <div>
@@ -66,13 +72,12 @@ export default ({
                         <p>{(iteminfo.price+iteminfo.shipping)}</p><br></br>
                     </div>             
                 </div>
-                <div>
-                <SubmitButton width="100" type="button" onSubmit={handleSubmit}>
+                
+                <SubmitButton width="100" type="button" onClick={handleSubmit}>
                     <span className="text">Purchase</span>
-                </SubmitButton>                
-                </div>
+                </SubmitButton>             
             </Form>
-            
+            ) : (<Form><Description2>You can see you purchase in your profile</Description2></Form>)}
             </ContentWithPaddingLg>
             <Footer />
         </AnimationRevealPage>
