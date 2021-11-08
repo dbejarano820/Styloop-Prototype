@@ -135,28 +135,24 @@ class ItemPage extends Component {
                         
                         <p>Price: ${this.state.isFetching ? "Hi" : this.state.itemInfo.price}</p> 
                         <br></br>
+
                         <p>Available Sizes: </p>
                         <select value={this.state.size} onChange={this.handleSizeChange}>{this.state.isFetching ? "Hi" : this.state.itemInfo.sizes.map((d) => <option>{d}</option>)}</select>
                         <br></br>
                         <br></br>
+
                         <p>Colors:</p>
                         <select value={this.state.color} onChange={this.handleColorChange}>{this.state.isFetching ? "Hi" : this.state.itemInfo.colors.map((d) => <option>{d}</option>)}</select>
                         <br></br>
-                        <PrimaryButton>Buy</PrimaryButton>
                         <br></br>
                         <br></br>
-                        <br></br>
+                        {/*--------------AQUI SE CAMBIAN LOS REVIEWS------------------------ */}
                         <HighlightedText>Reviews</HighlightedText>
                         <br></br>
                         <div style={{maxHeight:"200px", scrollBehavior:"smooth", overflowY:"scroll"}}>{this.state.isFetching ? "Hi" : this.state.itemInfo.reviews.map((d) => <p>{d.firstname} {d.lastname}: <br/> {d.rating} stars<br/> - {d.comment}<br/><br/></p>)} </div>
                         
                     </Description>
-                    <FormContainer>
-                        <Form onSubmit={this.handleSubmit} >
-                        <Input type="text" placeholder="Rating" name="rating" onChange={this.handleInputChange} />
-                        <Input type="text" placeholder="Comment" name="comment" onChange={this.handleInputChange} />
-                        </Form>
-                    </FormContainer>
+                    
                     </MainContent>
                 </MainContainer>
 

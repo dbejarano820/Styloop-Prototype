@@ -37,6 +37,9 @@ import SellerStore from "pages/MyStore";
 import AddProduct from "pages/AddProduct";
 import ItemPage from "pages/Item";
 import ItemInfoPage from "pages/ItemInfo";
+import BuyPage from "pages/Buy";
+
+
 
 class App extends Component {
   render() {
@@ -48,6 +51,7 @@ class App extends Component {
         <Route exact path="/sign-up" component={SignupPage} />
         <Route exact path="/sign-up-seller" component={SignupPageVendor} />
         <Route exact path="/shop/:store/:item" component={ItemPage} />
+        <Route exact path="/shop/buy/:store/:item" component={BuyPage} />
         <Route exact path="/shop/:store/:item/info" component={ItemInfoPage} />
         <Route exact path="/shop" component={MainShop} />  
         <Route exact path="/profile" component={ProfilePage} /> 
