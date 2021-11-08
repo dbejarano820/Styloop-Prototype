@@ -96,7 +96,7 @@ class ItemPage extends Component {
         const firstname = this.context.user.firstname
         const lastname = this.context.user.lastname
         const {rating, comment} = this.state
-        const {item, store} = this.props.match.params;
+        const {itemname, store} = this.props.match.params;
         console.log(rating+" "+comment)
         const res = await fetch('http://localhost:5000/api/item/writereview', 
         {
@@ -106,7 +106,7 @@ class ItemPage extends Component {
             },
             credentials: 'include',
             method: 'PUT',
-            body: JSON.stringify({name: item, store, firstname, lastname, rating, comment}),
+            body: JSON.stringify({name: itemname, store, firstname, lastname, rating, comment}),
         });
         
         await res.json()
@@ -133,8 +133,11 @@ class ItemPage extends Component {
         if(this.state.isBuying){
             return(
                 <BuyItem
-                    userinfo={{merchant : /*"CORREGIR ESTO"*/this.context.user.paymentmethods[0].merchant, user:/*"CORREGIR"*/this.context.user.paymentmethods[0].user}}
-                    iteminfo={{store: this.context.user.store, name:this.state.itemInfo.name, 
+                    userinfo={{ merchant : this.context.user.paymentmethods[0].merchant, 
+                                user:this.context.user.paymentmethods[0].user,
+                                email : this.context.user.email
+                            }}
+                    iteminfo={{store: this.state.itemInfo.store, name:this.state.itemInfo.name, 
                         price:this.state.itemInfo.price, shipping :this.state.itemInfo.shippingPrice}}
                 />
             )

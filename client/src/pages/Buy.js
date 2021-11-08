@@ -32,15 +32,32 @@ export default ({
 }) => {
 
     const [purchasedone, setPurchasedone] = useState(false);
-
-    
     const Description = tw.span`inline-block mt-0 text-left p-12`;
     const Description2 = tw.span`inline-block mt-0 text-center p-12`;
+    const buyitemURL = "http://localhost:5000/api/user/buyitem"
     
-    const handleSubmit = () => {
-        console.log("poop");
-        setPurchasedone(true);
-        //return <Redirect to="/profile"/>;
+    const handleSubmit = async () => {
+
+        const requestOptions = {
+            credentials: 'include',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email : userinfo.email,
+                itemname : iteminfo.name,
+                itemstore : iteminfo.store
+            })
+        };
+        try{
+            const res = await fetch(buyitemURL, requestOptions);
+            console.log(requestOptions);
+            setPurchasedone(true);
+        }
+        catch{
+            console.log("error guardando items")
+        }
     }
 
     return(

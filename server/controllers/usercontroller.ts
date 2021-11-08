@@ -64,21 +64,21 @@ export class UserController {
         const userInfo = {
             "email": info.email
         }
-        const item = {              //use item_repo to get info?
-            "itemname" : info.itemname,
-            "itemstore" : info.itemstore,
+        const itemInfo = {              //use item_repo to get info?
+            "name" : info.itemname,
+            "store" : info.itemstore,
         }
 
-        const tmpItem = await this.item_repo.info(item)
+        const tmpItem = await this.item_repo.info(itemInfo)
         
         const purchaseInfo = {
-            "itemname" : info.itemname,
-            "itemstore" : info.itemstore,
-            "itempicture" : tmpItem.pictures[0],
-            "price" : tmpItem.price,
+            "itemname" : tmpItem[0].name,
+            "itemstore" : tmpItem[0].store,
+            "itempicture" : tmpItem[0].pictures[0],
+            "price" : tmpItem[0].price,
             "timestamp" : new Date()
         }
-
+        
         return this.user_repo.buyItem(userInfo, purchaseInfo)
     }
 
