@@ -74,6 +74,7 @@ class ItemPage extends Component {
     };
 
     handleInputChange = (event) => {
+        console.log(event.target.value)
         this.setState({
         [event.target.name]: event.target.value,
         });
@@ -96,7 +97,7 @@ class ItemPage extends Component {
         const lastname = this.context.user.lastname
         const {rating, comment} = this.state
         const {item, store} = this.props.match.params;
-
+        console.log(rating+" "+comment)
         const res = await fetch('http://localhost:5000/api/item/writereview', 
         {
             headers: {
@@ -132,7 +133,7 @@ class ItemPage extends Component {
         if(this.state.isBuying){
             return(
                 <BuyItem
-                    userinfo={{merchant : "CORREGIR ESTO"/*this.context.user.paymentmethods.merchant*/, user:"CORREGIR"/*this.context.user.paymentmethods.user*/}}
+                    userinfo={{merchant : /*"CORREGIR ESTO"*/this.context.user.paymentmethods[0].merchant, user:/*"CORREGIR"*/this.context.user.paymentmethods[0].user}}
                     iteminfo={{store: this.context.user.store, name:this.state.itemInfo.name, 
                         price:this.state.itemInfo.price, shipping :this.state.itemInfo.shippingPrice}}
                 />

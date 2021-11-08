@@ -33,9 +33,9 @@ export default ({
     
     const Description = tw.span`inline-block mt-0 text-left p-12`;
     
-    const handlePurchase = () =>{
-        //console.log("poop")
-        return (<Redirect to="/profile"/>);
+    const handleSubmit = () =>{
+        console.log("poop")
+        //return (<Redirect to="/profile"/>);
     }
 
     return(
@@ -67,7 +67,7 @@ export default ({
                     </div>             
                 </div>
                 <div>
-                <SubmitButton width="100" type="button" onClick={handlePurchase}>
+                <SubmitButton width="100" type="button" onSubmit={handleSubmit}>
                     <span className="text">Purchase</span>
                 </SubmitButton>                
                 </div>
