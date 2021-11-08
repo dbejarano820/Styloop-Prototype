@@ -35,7 +35,7 @@ export default ({
     
     const handlePurchase = () =>{
         //console.log("poop")
-        return <Redirect to="/profile" />;
+        return (<Redirect to="/profile"/>);
     }
 
     return(
