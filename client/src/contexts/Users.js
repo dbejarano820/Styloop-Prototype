@@ -81,7 +81,7 @@ class UsersContextProvider extends Component {
         },
         credentials: 'include',
         method: 'PUT',
-        body: JSON.stringify({ usertype, email, firstname, lastname, password, address: {firstline,secondline,zipcode,city,secondline,country}, paymentmethods : {merchant, user:username}}),
+        body: JSON.stringify({ usertype, email, firstname, lastname, password, address: {firstline,secondline,zipcode,city,state,secondline,country}, paymentmethods : {merchant, user:username}}),
       });
 
       const responseStatus = res.status;
