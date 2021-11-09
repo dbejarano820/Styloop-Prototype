@@ -23,11 +23,11 @@ app.put("/login", requireNotLoggedin, async (req, res, next) => {               
 
             const{
                 statusCode, 
-                user: {usertype, firstname, lastname, email, store, paymentmethods /*: {merchant, user}*/},
+                user: {usertype, firstname, lastname, email, store, paymentmethods, purchases},
             } = data
 
             const {firstline, secondline, zipcode, city, state, country} = data.user.address
-            const loggedInUser = {usertype, firstname, lastname, email, store, firstline, secondline, zipcode, city, state, country, paymentmethods}
+            const loggedInUser = {usertype, firstname, lastname, email, store, firstline, secondline, zipcode, city, state, country, paymentmethods, purchases}
             if(statusCode == 204) {
                 req.session.user = loggedInUser
             }
