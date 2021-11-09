@@ -86,5 +86,16 @@ app.put("/buyitem", requireLoggedin, (req, res, next) => {                   //r
         });
 });
 
+app.get("/getUserInfo/:email", (req, res, next) => {                   //requerimiento de comprar item
+    UserController.getInstance().getUserInfo(req.params.email)
+        .then((data) => {
+            res.json(data);
+        })
+        .catch((err) => {
+            res.json(err)
+            return "";
+        });
+});
+
 
 export { app as userrouter }

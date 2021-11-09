@@ -50,7 +50,7 @@ class NavBar extends Component {
                 <NavLink href={"/seller/mystore/"+this.context.user.store}>My Store</NavLink>
                     <NavLink href={"/seller/addproduct/"+this.context.user.store}>Add Product</NavLink>
                     <NavLink href="#">Dashboard</NavLink>
-                    <NavLink href="/profile" >Profile</NavLink>
+                    <NavLink href={"/profile/"+this.context.user.email} >Profile</NavLink>
                     <PrimaryLink onClick={this.context.logUserOut}>Logout</PrimaryLink>
                 </NavLinks>
                 ];
@@ -59,7 +59,7 @@ class NavBar extends Component {
             <NavLinks key={1}>
             <NavLink href="/shop">Shop</NavLink>
                 <NavLink href="#">About Us</NavLink>
-                <NavLink href="/profile" >Profile</NavLink>
+                <NavLink href={"/profile/"+this.context.user.email} >Profile</NavLink>
                 <PrimaryLink onClick={this.context.logUserOut}>Logout</PrimaryLink>
             </NavLinks>
             ];

@@ -49,5 +49,11 @@ export class user_data {
         return UserModel.updateOne(user, {"$push" : {"purchases" : data}})
     }
 
+    public getUserInfo(useremail:any) {
+        return UserModel.find({email : useremail})
+    }
+
+    
+
 }
 

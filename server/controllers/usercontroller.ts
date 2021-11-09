@@ -82,5 +82,9 @@ export class UserController {
         return this.user_repo.buyItem(userInfo, purchaseInfo)
     }
 
+    public async getUserInfo(info: any): Promise<any> {
+        return this.user_repo.getUserInfo(info)
+    }
+
 
 }

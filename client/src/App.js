@@ -54,7 +54,7 @@ class App extends Component {
         <Route exact path="/shop/buy/:store/:item" component={BuyPage} />
         <Route exact path="/shop/:store/:item/info" component={ItemInfoPage} />
         <Route exact path="/shop" component={MainShop} />  
-        <Route exact path="/profile" component={ProfilePage} /> 
+        <Route exact path="/profile/:email" component={ProfilePage} /> 
         <Route exact path="/seller/mystore/:store" component={SellerStore} /> 
         <Route exact path="/seller/addproduct/:store" component={AddProduct} /> 
         <Route exact path= "*" component={LandingPage}/>

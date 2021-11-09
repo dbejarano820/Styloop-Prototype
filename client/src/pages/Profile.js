@@ -13,6 +13,29 @@ const TextColumn = tw.div`text-center lg:text-left`;
 
 class Profile extends React.Component {
     static contextType = UsersContext;
+    
+    state = {
+        isFetching : true,
+        userInfo : {}
+    }
+
+    async componentDidMount() {
+        console.log("email: ")
+        console.log(this.props.match.params.email)
+        try{
+            const res = await fetch("http://localhost:5000/api/user/getUserInfo/"+this.props.match.params.email, {
+                credentials: 'include',
+                method: 'GET'
+            });
+            const data = await res.json();
+            console.log(data[0])
+            this.setState({userInfo : data[0], isFetching : false});
+        }
+        catch (error){
+            console.log(error)
+        }
+    }
+
 
     render () {
         const Subheading = tw.span`tracking-wider text-sm font-medium`;
@@ -50,7 +73,7 @@ class Profile extends React.Component {
                     <div>
                         <Description><b>Purchases:</b></Description>
                         <br></br>
-                        <Description>{this.context.user.purchases.map((p) =><p><i>Item: </i>{p.itemname}<br/> <i>Store: </i>{p.itemstore}<br/> <i>Total:</i> ${p.price}<br/><br/><br/></p>)}</Description>
+                        <Description>{this.state.isFetching ? "Loading purchases..." : this.state.userInfo.purchases.map((p) =><p><i>Item: </i>{p.itemname}<br/> <i>Store: </i>{p.itemstore}<br/> <i>Total:</i> ${p.price}<br/><br/><br/></p>)}</Description>
                     </div>
                     </div>
                 </ContentWithPaddingLg>
