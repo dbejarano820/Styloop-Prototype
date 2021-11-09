@@ -14,19 +14,9 @@ const TextColumn = tw.div`text-center lg:text-left`;
 class Profile extends React.Component {
     static contextType = UsersContext;
 
-    state = {
-        purchases : [],
-        ejemplo : "adasfasd\nfdgsdfg"
-    }
-
     render () {
         const Subheading = tw.span`tracking-wider text-sm font-medium`;
         const Description = tw.span`inline-block mt-8`;
-        /*
-        for (var i = 0; i < this.context.user.purchases.length; i++) {
-            this.state.purchases.push({})
-        }*/
-        
 
         if(this.context.user.usertype == "buyer"){
             return(
@@ -60,7 +50,7 @@ class Profile extends React.Component {
                     <div>
                         <Description><b>Purchases:</b></Description>
                         <br></br>
-                        <Description>{this.state.ejemplo}</Description>
+                        <Description>{this.context.user.purchases.map((p) =><p><i>Item: </i>{p.itemname}<br/> <i>Store: </i>{p.itemstore}<br/> <i>Total:</i> ${p.price}<br/><br/><br/></p>)}</Description>
                     </div>
                     </div>
                 </ContentWithPaddingLg>
