@@ -73,7 +73,7 @@ class Profile extends React.Component {
                     <div>
                         <Description><b>Purchases:</b></Description>
                         <br></br>
-                        <Description>{this.state.isFetching ? "Loading purchases..." : this.state.userInfo.purchases.map((p) =><p><i>Item: </i>{p.itemname}<br/> <i>Store: </i>{p.itemstore}<br/> <i>Total:</i> ${p.price}<br/><br/><br/></p>)}</Description>
+                        <Description>{this.state.isFetching ? "Loading purchases..." : this.state.userInfo.purchases.map((p) =><p><i>Item: </i>{p.itemname}<br/> <i>Store: </i>{p.itemstore}<br/> <i>Price:</i> ${p.price}<br/><br/><br/></p>)}</Description>
                     </div>
                     </div>
                 </ContentWithPaddingLg>
