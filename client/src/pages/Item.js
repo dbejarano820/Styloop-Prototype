@@ -70,7 +70,9 @@ class ItemPage extends Component {
         itemInfo: {},
         size: "none",
         color: "none",
-        isBuying : false
+        isBuying : false,
+        store: "none",
+        itemname: "none",
     };
 
     handleInputChange = (event) => {
@@ -96,7 +98,7 @@ class ItemPage extends Component {
         const firstname = this.context.user.firstname
         const lastname = this.context.user.lastname
         const {rating, comment} = this.state
-        const {itemname, store} = this.props.match.params;
+        const {itemname, store} = this.state
         console.log(rating+" "+comment)
         const res = await fetch('http://localhost:5000/api/item/writereview', 
         {
@@ -121,7 +123,7 @@ class ItemPage extends Component {
             method: 'GET',
         });
         const info  = await res.json();
-        this.setState({itemInfo: info[0], isFetching: false})
+        this.setState({itemInfo: info[0], isFetching: false, itemname: item, store})
     };
 
     render() {
