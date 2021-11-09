@@ -4,6 +4,10 @@ import {history} from '../global';
 const UsersContext = React.createContext();
 const API_URL = 'http://localhost:5000';
 
+function stringContainsNumber(_string) {
+  return /\d/.test(_string);
+}
+
 class UsersContextProvider extends Component {
   constructor(props) {
     super(props);
@@ -66,10 +70,19 @@ class UsersContextProvider extends Component {
     state, country, merchant, username, password, confirmpassword, usertype) => {
     let title, text;
 
+      console.log("Llamada inicial  " + password)
 
-    if (password.length < 3 || confirmpassword.length < 3) {
+    var pattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/
+    
+    
+
+    if (password.length < 8 || confirmpassword.length < 8) {
       title = 'Ooops!';
-      text = 'Password must be longer than 3 chars.';
+      text = 'Password must be longer than 7 chars.';
+    } else if (!pattern.test(password)){
+      console.log("si no tiene special char")
+      title = 'Ooops!';
+      text = 'Password must contain a special character.';
     } else if (password !== confirmpassword) {
       title = 'Ooops!';
       text = 'Password and Confirm Password must match.';
@@ -104,10 +117,16 @@ class UsersContextProvider extends Component {
   registerUserSeller = async (email, firstname, lastname, store, password, confirmpassword, usertype) => {
     let title, text;
 
-
-    if (password.length < 3 || confirmpassword.length < 3) {
+    var pattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/
+    
+  
+    if (password.length < 8 || confirmpassword.length < 8) {
       title = 'Ooops!';
-      text = 'Password must be longer than 3 chars.';
+      text = 'Password must be longer than 7 chars.';
+    } else if (!pattern.test(password)){
+      console.log("si no tiene special char")
+      title = 'Ooops!';
+      text = 'Password must contain a special character.';
     } else if (password !== confirmpassword) {
       title = 'Ooops!';
       text = 'Password and Confirm Password must match.';
