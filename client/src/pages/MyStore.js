@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, {  } from "react";
 import NavBar from 'components/hero/NavBar';
 import { UsersContext } from "../contexts/Users";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import tw from "twin.macro";
-import { Container as ContainerBase, ContentWithVerticalPadding, ContentWithPaddingLg } from "components/misc/Layouts.js";
-import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
+import { Container as ContainerBase, ContentWithPaddingLg } from "components/misc/Layouts.js";
+import { SectionHeading } from "components/misc/Headings.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 import TabGrid from "components/cards/SimpleTabCard.js";
-import ContactUs from "./ContactUs";
 
 
 const Container = tw(ContainerBase)`h-56 bg-teal-900 text-white font-medium flex justify-center -m-8`;

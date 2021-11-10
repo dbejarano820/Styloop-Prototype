@@ -3,14 +3,12 @@ import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
-import {css} from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/clothes-model-1.jpeg";
 import logo from "images/STYLOOP-01.png";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 import { UsersContext } from "../contexts/Users";
 import { Component } from "react";
-import { Redirect, Link , useHistory} from 'react-router-dom';
-import {history} from '../global';
+import { Redirect} from 'react-router-dom';
 import SweetAlert from 'sweetalert';
 
 const Container = tw(ContainerBase)`min-h-screen bg-teal-900 text-white font-medium flex justify-center -m-8`;

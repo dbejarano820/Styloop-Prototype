@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import NavBar from 'components/hero/NavBar';
-import { UsersContext } from "../contexts/Users";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
-import { Redirect, Link , useHistory} from 'react-router-dom';
-
 import { Container as ContainerBase, ContentWithVerticalPadding, ContentWithPaddingLg } from "components/misc/Layouts.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 
@@ -24,7 +20,6 @@ const SubmitButton = styled.button`
     ${tw`ml-0`}
   }
 `;
-
 
 export default ({
     userinfo = {},

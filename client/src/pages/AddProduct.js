@@ -6,7 +6,6 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 import { Redirect, Link , useHistory} from 'react-router-dom';
-
 import { Container as ContainerBase, ContentWithVerticalPadding, ContentWithPaddingLg } from "components/misc/Layouts.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 
@@ -24,7 +23,6 @@ const SubmitButton = styled.button`
     ${tw`ml-3`}
   }
 `;
-
 
 class AddProduct extends React.Component {
     static contextType = UsersContext;
@@ -64,7 +62,6 @@ class AddProduct extends React.Component {
         this.setState({
             [event.target.name] : arrayData
         });
-        //console.log(arrayData)
     };
 
     handleSubmit = async (event) => {
