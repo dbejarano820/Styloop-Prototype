@@ -119,19 +119,20 @@ class UsersContextProvider extends Component {
     registerUserSeller = async (email, firstname, lastname, store, password, confirmpassword, usertype) => {
         let title, text;
 
-        var pattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/
-        
-    
-        if (password.length < 8 || confirmpassword.length < 8) {
+        const reg_ex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/;
+
+        if(password.length < 8 || password.length > 16){
+            console.log("contraseña de largo incorrecto")
             title = 'Ooops!';
-            text = 'Password must be longer than 7 chars.';
-        } else if (!pattern.test(password)){
-            console.log("si no tiene special char")
+            text = 'Contraseña invalida';
+        } else if (password != confirmpassword) {
+            console.log("no confirmo la contraseña correctamente")
             title = 'Ooops!';
-            text = 'Password must contain a special character.';
-        } else if (password !== confirmpassword) {
+            text = 'Contraseña invalida';
+        } else if (!(reg_ex.test(password))) {
+            console.log("no cumple las condiciones")
             title = 'Ooops!';
-            text = 'Password and Confirm Password must match.';
+            text = 'Contraseña invalida';
         } else {
             const res = await fetch(`${API_URL}/api/user/register`, {
                 headers: {
