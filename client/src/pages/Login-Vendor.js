@@ -11,6 +11,7 @@ import { UsersContext } from "../contexts/Users";
 import { Component } from "react";
 import { Redirect, Link , useHistory} from 'react-router-dom';
 import {history} from '../global';
+import SweetAlert from 'sweetalert';
 
 const Container = tw(ContainerBase)`min-h-screen bg-teal-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -59,22 +60,21 @@ class LoginSeller extends Component {
       showAlert: false,
       title: '',
       text: '',
+      icon: '',
     },
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
     const {email, password} = this.state
-    const { title, text } = await this.context.logUserIn(email, password);
+    const { title, text, icon } = await this.context.logUserIn(email, password);
 
-    // if (title === "Done") {
-    //   await history.pushState("/")
-    // }
     this.setState({
       alert: {
         showAlert: true,
         title,
         text,
+        icon,
       },
     });
   };
@@ -88,7 +88,13 @@ class LoginSeller extends Component {
 
   render() {
     if (this.context.isLoggedIn) {
-      return <Redirect to="/seller/mystore" />;
+      return <Redirect to={"/seller/mystore/"+this.context.user.store} />;
+    }
+
+    const { showAlert, title, text, icon} = this.state.alert;
+    if (showAlert) {
+        SweetAlert({title, text, icon})
+        this.setState({ alert: { showAlert: false } })
     }
 
     return ( 

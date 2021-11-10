@@ -10,6 +10,7 @@ import { UsersContext } from "../contexts/Users";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 import { Redirect, Link , useHistory} from 'react-router-dom';
 import { checkServerIdentity } from "tls";
+import SweetAlert from 'sweetalert';
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -52,12 +53,21 @@ class SignupClient extends React.Component {
   privacyPolicyUrl = "#";
   signInUrl = "https://www.youtube.com/";
 
+  state = {
+    alert: {
+      showAlert: false,
+      title: '',
+      text: '',
+      icon: '',
+    },
+  };
+
   handleSubmit = async (event) => {
     event.preventDefault();
     const {email, firstname, lastname, firstline, secondline, zipcode, city,
       state, country, merchant, username, password, confirmpassword} = this.state
 
-    const { title, text } = await this.context.registerUserBuyer(email, firstname, lastname, firstline, secondline, zipcode, city,
+    const { title, text, icon } = await this.context.registerUserBuyer(email, firstname, lastname, firstline, secondline, zipcode, city,
       state, country, merchant, username, password, confirmpassword, "buyer");
 
     if (title === "Done") {
@@ -68,6 +78,7 @@ class SignupClient extends React.Component {
         showAlert: true,
         title,
         text,
+        icon,
       },
     });
   };
@@ -80,9 +91,17 @@ class SignupClient extends React.Component {
   };
 
   render() {
+    
     if (this.context.isLoggedIn) {
       return <Redirect to="/shop" />;
     }
+
+    const { showAlert, title, text, icon} = this.state.alert;
+    if (showAlert) {
+        SweetAlert({title, text, icon})
+        this.setState({ alert: { showAlert: false } })
+    }
+
     return(
     <AnimationRevealPage>
         <Container>

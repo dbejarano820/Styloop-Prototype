@@ -4,10 +4,6 @@ import {history} from '../global';
 const UsersContext = React.createContext();
 const API_URL = 'http://localhost:5000';
 
-function stringContainsNumber(_string) {
-  return /\d/.test(_string);
-}
-
 class UsersContextProvider extends Component {
     constructor(props) {
         super(props);
@@ -35,7 +31,7 @@ class UsersContextProvider extends Component {
     };
 
     logUserIn = async (email, password) => {
-        let title, text;
+        let title, text, icon;
         const res = await fetch(`${API_URL}/api/user/login`, {
         headers: {
             Accept: 'application/json',
@@ -49,7 +45,8 @@ class UsersContextProvider extends Component {
         const { user, statusCode: responseStatus } = await res.json();
         if (responseStatus === 422) {
         title = 'Ooops!';
-        text = 'Incorrect credentials.';
+        text = 'Invalid email or password.';
+        icon = 'error';
         } else if (responseStatus === 204) {
         this.setState({
             isLoggedIn: true,
@@ -58,17 +55,19 @@ class UsersContextProvider extends Component {
 
         title = 'Done';
         text = 'You will get redirected to home page.';
+        icon = 'success';
         } else {
         title = 'Ooops!';
-        text = 'Something went wrong. Try again later.';
+        text = 'Invalid email or password.';
+        icon = 'error';
         }
 
-        return { title, text };
+        return { title, text, icon};
     };
 
     registerUserBuyer = async (email, firstname, lastname, firstline, secondline, zipcode, city,
                             state, country, merchant, username, password, confirmpassword, usertype) => {
-        let title, text;
+        let title, text, icon;
 
         const reg_ex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/;
 
@@ -103,17 +102,20 @@ class UsersContextProvider extends Component {
 
             if (responseStatus === 409) {
                 title = 'Ooops!';
-                text = 'Username already taken.';
+                text = 'Email already taken.';
+                icon = "error"
             } else if (responseStatus === 201) {
                 title = 'Done';
                 text = 'Your account was created.';
+                icon = 'success'
             } else {
                 title = 'Ooops!';
-                text = 'Something went wrong. Try again later.';
+                text = 'Something went wrong.';
+                icon = 'error'
             }
         }
 
-        return { title, text };
+        return { title, text, icon};
     };
 
     registerUserSeller = async (email, firstname, lastname, store, password, confirmpassword, usertype) => {
@@ -124,15 +126,15 @@ class UsersContextProvider extends Component {
         if(password.length < 8 || password.length > 16){
             console.log("contraseña de largo incorrecto")
             title = 'Ooops!';
-            text = 'Contraseña invalida';
+            text = 'Password must be atleast 8 characters long';
         } else if (password != confirmpassword) {
             console.log("no confirmo la contraseña correctamente")
             title = 'Ooops!';
-            text = 'Contraseña invalida';
+            text = 'Password and Confirmed Password do not match';
         } else if (!(reg_ex.test(password))) {
             console.log("no cumple las condiciones")
             title = 'Ooops!';
-            text = 'Contraseña invalida';
+            text = 'Password must have an upper case letter, lower case letter, number and special character';
         } else {
             const res = await fetch(`${API_URL}/api/user/register`, {
                 headers: {

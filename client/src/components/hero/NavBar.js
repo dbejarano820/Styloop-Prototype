@@ -43,6 +43,7 @@ class NavBar extends Component {
   
     render() {
       let navLinks
+      let logoLink
       if (this.context.isLoggedIn) {
         if(this.context.user.usertype == "seller"){
             navLinks = [
@@ -54,6 +55,13 @@ class NavBar extends Component {
                     <PrimaryLink onClick={this.context.logUserOut}>Logout</PrimaryLink>
                 </NavLinks>
                 ];
+
+                 logoLink = (
+                  <LogoLink href="#">
+                    <img src={logoImageSrc} alt="Logo" />
+                    Styloop
+                  </LogoLink>
+                );
         } else {
             navLinks = [
             <NavLinks key={1}>
@@ -63,6 +71,13 @@ class NavBar extends Component {
                 <PrimaryLink onClick={this.context.logUserOut}>Logout</PrimaryLink>
             </NavLinks>
             ];
+
+             logoLink = (
+              <LogoLink href="/">
+                <img src={logoImageSrc} alt="Logo" />
+                Styloop
+              </LogoLink>
+            );
          }
       } else {
          navLinks = [
@@ -74,14 +89,14 @@ class NavBar extends Component {
             <PrimaryLink href="sign-up">Signup</PrimaryLink> 
           </NavLinks>
         ];
+         logoLink = (
+          <LogoLink href="/">
+            <img src={logoImageSrc} alt="Logo" />
+            Styloop
+          </LogoLink>
+        );
       }
   
-      const logoLink = (
-        <LogoLink href="/">
-          <img src={logoImageSrc} alt="Logo" />
-          Styloop
-        </LogoLink>
-      );
   
   
       return (

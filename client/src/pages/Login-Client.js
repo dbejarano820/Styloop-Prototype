@@ -11,6 +11,8 @@ import { UsersContext } from "../contexts/Users";
 import { Component } from "react";
 import { Redirect, Link , useHistory} from 'react-router-dom';
 import {history} from '../global';
+import SweetAlert from 'sweetalert';
+
 
 const Container = tw(ContainerBase)`min-h-screen bg-teal-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -59,25 +61,26 @@ class LoginBuyer extends Component {
       showAlert: false,
       title: '',
       text: '',
+      icon: '',
     },
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
     const {email, password} = this.state
-    const { title, text } = await this.context.logUserIn(email, password);
+    let { title, text, icon } = await this.context.logUserIn(email, password);
 
-    // if (title === "Done") {
-    //   await history.pushState("/")
-    // }
     this.setState({
       alert: {
         showAlert: true,
         title,
         text,
+        icon,
       },
     });
   };
+
+
 
 
   handleInputChange = (event) => {
@@ -85,58 +88,63 @@ class LoginBuyer extends Component {
       [event.target.name]: event.target.value,
     });
   };
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
 
   render() {
     if (this.context.isLoggedIn) {
       return <Redirect to="/shop" />;
     }
 
+    const { showAlert, title, text, icon} = this.state.alert;
+    if (showAlert) {
+        SweetAlert({title, text, icon})
+        this.setState({ alert: { showAlert: false } })
+    }
+      
     return ( 
-      <AnimationRevealPage>
-      <Container>
-        <Content>
-          <MainContainer>
-            <LogoLink href={this.logoLinkUrl}>
-              <LogoImage src={logo} />
-            </LogoLink>
-            <MainContent>
-              <Heading>{this.headingText}</Heading>
-              <FormContainer>
-                <Form onSubmit={this.handleSubmit} >
-                  <Input type="email" placeholder="Email" name="email" onChange={this.handleInputChange} />
-                  <Input type="password" placeholder="Password" name="password" onChange={this.handleInputChange} />
-                  <SubmitButton type="submit" onSubmit={this.handleSubmit}>
-                    <this.SubmitButtonIcon className="icon" />
-                    <span className="text">{this.submitButtonText}</span>
-                  </SubmitButton>
-                </Form>
-                <p tw="mt-6 text-xs text-gray-600 text-center">
-                  <a href={this.forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
-                    Forgot Password ?
-                  </a>
-                </p>
-                <p tw="mt-8 text-sm text-gray-600 text-center">
-                  Dont have an account?{" "}
-                  <a href={this.signupUrl} tw="border-b border-gray-500 border-dotted">
-                    Sign Up
-                  </a>
-                </p>
-              </FormContainer>
-            </MainContent>
-          </MainContainer>
-          <IllustrationContainer>
-            <IllustrationImage imageSrc={this.illustrationImageSrc} />
-          </IllustrationContainer>
-        </Content>
-      </Container>
-    </AnimationRevealPage>
+        <AnimationRevealPage>
+      {/* <SweetAlert 
+      show={showAlert}
+      title={title}
+      text={text}
+      icon={icon}
+      onConfirm={() => this.setState({ alert: { showAlert: false } })}/> */}
+          <Container>
+            <Content>
+              <MainContainer>
+                <LogoLink href={this.logoLinkUrl}>
+                  <LogoImage src={logo} />
+                </LogoLink>
+                <MainContent>
+                  <Heading>{this.headingText}</Heading>
+                  <FormContainer>
+                    <Form onSubmit={this.handleSubmit}>
+                      <Input type="email" placeholder="Email" name="email" onChange={this.handleInputChange} />
+                      <Input type="password" placeholder="Password" name="password" onChange={this.handleInputChange} />
+                      <SubmitButton type="submit" onSubmit={this.handleSubmit}>
+                        <this.SubmitButtonIcon className="icon" />
+                        <span className="text">{this.submitButtonText}</span>
+                      </SubmitButton>
+                    </Form>
+                    <p tw="mt-6 text-xs text-gray-600 text-center">
+                      <a href={this.forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
+                        Forgot Password ?
+                      </a>
+                    </p>
+                    <p tw="mt-8 text-sm text-gray-600 text-center">
+                      Dont have an account?{" "}
+                      <a href={this.signupUrl} tw="border-b border-gray-500 border-dotted">
+                        Sign Up
+                      </a>
+                    </p>
+                  </FormContainer>
+                </MainContent>
+              </MainContainer>
+              <IllustrationContainer>
+                <IllustrationImage imageSrc={this.illustrationImageSrc} />
+              </IllustrationContainer>
+            </Content>
+          </Container>
+        </AnimationRevealPage>
     );
   }
 }
