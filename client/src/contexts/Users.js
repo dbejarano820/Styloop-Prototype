@@ -78,15 +78,18 @@ class UsersContextProvider extends Component {
         if(password.length < 8 || password.length > 16){
             console.log("contraseña de largo incorrecto")
             title = 'Ooops!';
-            text = 'Contraseña invalida';
+            text = 'Password must be atleast 8 characters long';
+            icon = 'error';
         } else if (password != confirmpassword) {
             console.log("no confirmo la contraseña correctamente")
             title = 'Ooops!';
-            text = 'Contraseña invalida';
+            text = 'Password and Confirmed Password do not match';
+            icon = 'error';
         } else if (!(reg_ex.test(password))) {
             console.log("no cumple las condiciones")
             title = 'Ooops!';
-            text = 'Contraseña invalida';
+            text = 'Password must have an upper case letter, lower case letter, number and special character';
+            icon = 'error';
         } else {
             const res = await fetch(`${API_URL}/api/user/register`, {
                 headers: {
@@ -150,7 +153,7 @@ class UsersContextProvider extends Component {
 
             if (responseStatus === 409) {
                 title = 'Ooops!';
-                text = 'Username already taken.';
+                text = 'Email already taken.';
             } else if (responseStatus === 201) {
                 title = 'Done';
                 text = 'Your account was created.';
